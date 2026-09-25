@@ -1,8 +1,12 @@
+<p align="center">
+  <img src="assets/branding/sinag-ng-kaalaman-logo.webp" width="300" alt="Sinag ng Kaalaman logo">
+</p>
+
 # Sinag ng Kaalaman
 
 **Sinag ng Kaalaman** is a local-first, browser-based multilingual learning app for Grade 4 to Grade 5 learners, approximately ages 9 to 10.
 
-The project is intended for children who are more comfortable in English and need structured practice understanding Filipino and Hiligaynon vocabulary through context, explanation, repetition, and age-appropriate gamification.
+The project is intended for children who are more comfortable in English and need structured practice understanding Filipino and Hiligaynon vocabulary through context, explanation, repetition, spelling, and age-appropriate gamification.
 
 ## Initial learning pairs
 
@@ -14,12 +18,26 @@ The project is intended for children who are more comfortable in English and nee
 ## Core learning loop
 
 1. Choose a language pair and activity.
-2. Answer contextual vocabulary or comprehension questions.
+2. Answer contextual vocabulary, comprehension, translation, or spelling questions.
 3. Receive immediate feedback.
 4. If an answer is incorrect, teach the correct answer and explain why it fits.
 5. Reintroduce difficult concepts later for reinforcement.
-6. Track mastery, XP, levels, badges, and periodic progress checks.
+6. Track mastery, spelling performance, XP, levels, badges, and periodic Progress Checks.
 7. Surface strengths and learning gaps to the parent or guardian through local progress analytics.
+
+## Exercise direction
+
+Initial exercise families include:
+
+- contextual multiple choice
+- meaning matching
+- translation / reverse translation
+- sentence comprehension
+- synonyms and antonyms
+- partial-word spelling
+- full-word spelling
+
+Spelling should distinguish between a wrong concept and a correctly understood concept that was misspelled.
 
 ## Learner profile
 
@@ -28,7 +46,7 @@ The MVP only needs enough identity to personalize the experience.
 - Ask for the child's first name or preferred nickname on first use.
 - Do not require age, birth date, full legal name, email address, or account registration.
 - Store the name locally with the learner's progress.
-- Include the name in export and restore so a recovered profile remains recognizable.
+- Include the name in export and import so a recovered profile remains recognizable.
 
 The app is already designed for the Grade 4 to Grade 5 age range, so collecting age is unnecessary for the initial product.
 
@@ -40,6 +58,8 @@ The local Parent Progress view should summarize:
 
 - performance by language pair
 - performance by concept category
+- vocabulary understanding
+- spelling accuracy and frequently misspelled words
 - concepts and words that need more practice
 - concepts and categories where the learner is strongest
 - mastery distribution
@@ -50,17 +70,19 @@ These analytics are educational summaries derived from local learner activity, n
 
 ## Initial product boundaries
 
-- Browser-based and local-first.
+- Browser-based, responsive, and device-neutral.
+- Local-first.
 - No account or cloud backend required for the MVP.
 - Canonical learning content stored as versioned JSON.
 - Learner progress stored locally in the browser.
-- Progress can be exported and restored from a backup file.
+- Progress supports both Export Progress and Import Progress.
+- Import validates the backup and requires confirmation before replacing current progress.
 - Normal activities are self-paced.
 - Timed challenge mode is optional.
 - Accessibility is a first-class requirement.
 - Content accuracy and age suitability take priority over content volume.
 - Only the learner's first name or nickname is required for personalization.
-- Parent analytics remain local to the device and exported backup.
+- Parent analytics remain local to the browser profile and exported backup.
 
 ## Character presentation
 
@@ -76,6 +98,19 @@ The current 2D character art should be treated as the source design for later 3D
 - reduced-motion preferences must be respected
 - character animation must not compete with reading or feedback
 
+## Branding
+
+The current project logo is stored under [`assets/branding/`](assets/branding/). Its visual language uses light, an open book, and a growing sprout to represent discovery, learning, and growth.
+
+## Content and dataset foundation
+
+Source collection has started under [`data/`](data/) and is governed by provenance and licensing review.
+
+- [`data/source_registry.json`](data/source_registry.json) is the machine-readable source registry.
+- [`docs/DATASET_AND_CONTENT_SOURCES.md`](docs/DATASET_AND_CONTENT_SOURCES.md) explains the intake and validation policy.
+- External corpora are not automatically canonical learning content.
+- Age suitability, language correctness, licensing, and provenance must be reviewed before material enters the production question bank.
+
 ## Documentation
 
 - [Project Ideation](docs/PROJECT_IDEATION.md)
@@ -83,6 +118,7 @@ The current 2D character art should be treated as the source design for later 3D
 - [Build and Project Guidelines](docs/BUILD_GUIDELINES.md)
 - [Prime Directive](docs/PRIME_DIRECTIVE.md)
 - [Current Prototype Audit](docs/CURRENT_PROTOTYPE_AUDIT.md)
+- [Dataset and Content Sources](docs/DATASET_AND_CONTENT_SOURCES.md)
 
 ## Current phase
 
@@ -90,11 +126,12 @@ The current 2D character art should be treated as the source design for later 3D
 
 An Open Design prototype now exists and demonstrates the main interaction direction. The current implementation is still a prototype and must be reconciled with the canonical project requirements before it is treated as the production architecture.
 
-The next bounded work remains content foundation, learner-profile onboarding, parent analytics data requirements, progress export and restore, and the stable learning-session model.
+The next bounded work is content intake, canonical concept schema validation, reviewed question samples, learner-profile onboarding, local analytics, progress export/import, and the stable learning-session model.
 
 ## External reference projects under evaluation
 
-- `jjjardev/hilisenti` for Hiligaynon linguistic reference and corpus research. Its dataset is currently published under CC BY-NC-SA 4.0, while its code is MIT licensed. Dataset material must not be treated as unrestricted commercial content.
-- `img2threejs/img2threejs` as a possible procedural 3D tooling reference for the study-buddy characters and reward presentation. It is currently Apache-2.0 licensed.
+- `jjjardev/hilisenti` for Hiligaynon linguistic reference and corpus research. Its dataset is published under CC BY-NC-SA 4.0, while its code is MIT licensed. Dataset material must not be treated as unrestricted commercial content.
+- `jhellingman/phildict` for historical Philippine-language dictionary material. The repository does not declare a top-level license, so underlying works and processed files must be reviewed individually before reuse.
+- `img2threejs/img2threejs` as a possible procedural 3D tooling reference for study-buddy characters and reward presentation.
 
 External sources are references or optional inputs only. Sinag ng Kaalaman must maintain its own curated, provenance-aware canonical learning content.

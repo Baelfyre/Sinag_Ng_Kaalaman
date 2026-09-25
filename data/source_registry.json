@@ -1,0 +1,167 @@
+{
+  "schema_version": 1,
+  "updated": "2026-09-26",
+  "purpose": "Initial source registry for Sinag ng Kaalaman educational content intake.",
+  "sources": [
+    {
+      "source_id": "deped_lr_portal",
+      "name": "DepEd Learning Resource Portal",
+      "type": "curriculum_and_learning_materials",
+      "url": "https://lrmds.deped.gov.ph/",
+      "languages": [
+        "Filipino",
+        "Tagalog",
+        "Hiligaynon",
+        "English"
+      ],
+      "grade_relevance": [
+        "Grade 4",
+        "Grade 5"
+      ],
+      "intended_use": [
+        "curriculum alignment",
+        "age suitability",
+        "activity design",
+        "vocabulary topic discovery"
+      ],
+      "status": "SOURCE_SPECIFIC_REVIEW",
+      "license_summary": "Copyright and Conditions of Use vary by resource.",
+      "commercial_use": "unknown_by_default",
+      "canonical_import": false,
+      "notes": "Use as reference unless the specific item's conditions explicitly permit the intended adaptation or redistribution."
+    },
+    {
+      "source_id": "princeton_wordnet_3",
+      "name": "Princeton WordNet",
+      "type": "english_lexical_database",
+      "url": "https://wordnet.princeton.edu/",
+      "license_url": "https://wordnet.princeton.edu/license-and-commercial-use",
+      "languages": [
+        "English"
+      ],
+      "intended_use": [
+        "concept senses",
+        "definitions",
+        "synonyms",
+        "antonyms",
+        "semantic relationships"
+      ],
+      "status": "REFERENCE_APPROVED",
+      "license_summary": "Use, copy, modify, and distribute permitted subject to WordNet license notice requirements.",
+      "commercial_use": true,
+      "canonical_import": "reviewed_subset_only",
+      "notes": "Definitions/glosses require age-suitability review before learner-facing use."
+    },
+    {
+      "source_id": "tatoeba_text",
+      "name": "Tatoeba textual sentence exports",
+      "type": "multilingual_sentence_corpus",
+      "url": "https://tatoeba.org/en/downloads",
+      "languages": [
+        "English",
+        "Tagalog",
+        "Hiligaynon"
+      ],
+      "intended_use": [
+        "sentence pattern research",
+        "translation comparison",
+        "context candidates"
+      ],
+      "status": "REFERENCE_APPROVED",
+      "license_summary": "Main textual exports CC BY 2.0 FR; some original sentences available under CC0 1.0.",
+      "commercial_use": true,
+      "attribution_required": true,
+      "canonical_import": "reviewed_subset_only",
+      "notes": "Prefer CC0 records when practical. Audio is separately licensed and excluded from this registry entry."
+    },
+    {
+      "source_id": "hilisenti_v1",
+      "name": "HiliSenti v1",
+      "type": "hiligaynon_sentiment_corpus",
+      "url": "https://huggingface.co/datasets/jjjardev/hilisenti-v1",
+      "repository": "https://github.com/jjjardev/hilisenti",
+      "languages": [
+        "Hiligaynon",
+        "English code-switching",
+        "Tagalog code-switching"
+      ],
+      "intended_use": [
+        "modern usage research",
+        "context analysis",
+        "code-switching research"
+      ],
+      "status": "NONCOMMERCIAL_REFERENCE",
+      "license_summary": "Dataset CC BY-NC-SA 4.0; repository code MIT.",
+      "commercial_use": false,
+      "canonical_import": false,
+      "notes": "Keep isolated from commercially unrestricted core content unless separately cleared."
+    },
+    {
+      "source_id": "phildict",
+      "name": "jhellingman/phildict",
+      "type": "historical_dictionary_collection",
+      "url": "https://github.com/jhellingman/phildict",
+      "languages": [
+        "Tagalog",
+        "Visayan",
+        "Cebuano",
+        "Hiligaynon-related historical material",
+        "English",
+        "Spanish"
+      ],
+      "intended_use": [
+        "lexical cross-checking",
+        "historical forms",
+        "source discovery"
+      ],
+      "status": "LICENSE_REVIEW_REQUIRED",
+      "license_summary": "No top-level GitHub license declared; underlying works must be reviewed individually.",
+      "commercial_use": "unknown",
+      "canonical_import": false,
+      "notes": "Do not treat repository availability as redistribution permission."
+    },
+    {
+      "source_id": "gutenberg_calderon_20738",
+      "name": "Diccionario Ingles-Español-Tagalog",
+      "author": "Sofronio G. Calderón",
+      "publication_year": 1915,
+      "type": "historical_dictionary",
+      "url": "https://www.gutenberg.org/ebooks/20738",
+      "languages": [
+        "English",
+        "Spanish",
+        "Tagalog"
+      ],
+      "intended_use": [
+        "historical lexical reference",
+        "Tagalog cross-checking"
+      ],
+      "status": "CANDIDATE",
+      "license_summary": "Project Gutenberg reports public domain in the USA; Gutenberg terms and local jurisdiction must be checked.",
+      "commercial_use": "jurisdiction_review_required",
+      "canonical_import": false,
+      "notes": "Historical spelling and vocabulary require modern Filipino review."
+    },
+    {
+      "source_id": "gutenberg_bisayan_grammar",
+      "name": "A Bisayan Grammar and related lexical comparison material",
+      "type": "historical_language_reference",
+      "url": "https://www.gutenberg.org/files/69603/",
+      "languages": [
+        "Bisayan",
+        "Tagalog",
+        "English"
+      ],
+      "intended_use": [
+        "historical comparison",
+        "cognate research",
+        "source discovery"
+      ],
+      "status": "CANDIDATE",
+      "license_summary": "Project Gutenberg-hosted historical work; source and jurisdiction review required.",
+      "commercial_use": "jurisdiction_review_required",
+      "canonical_import": false,
+      "notes": "Historical 'Bisayan' must not automatically be mapped to modern Hiligaynon."
+    }
+  ]
+}
