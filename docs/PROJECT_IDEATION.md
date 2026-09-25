@@ -21,6 +21,21 @@ The project addresses that gap through short, repeatable, context-based learning
 
 The interface should feel like a modern educational game, not a preschool app and not a formal learning-management system.
 
+## Learner identity
+
+The application should know enough about the learner to personalize the experience without collecting unnecessary personal data.
+
+For the MVP:
+
+- ask only for the child's first name or preferred nickname
+- do not ask for age because the application is already designed for a Grade 4 to Grade 5 audience
+- do not require a full legal name, birth date, email address, account, or login
+- store the name locally with learner progress
+- allow the learner or guardian to edit the name later
+- include the name in exported progress backups
+
+The name may be used in greetings, encouragement, progress summaries, and restore previews.
+
 ## Initial language combinations
 
 1. English -> Tagalog
@@ -110,7 +125,7 @@ Flow:
 
 `Question -> Answer -> Explanation -> Next`
 
-Optional challenge mode may use a 90-second countdown per question. The timer must stop when the learner submits an answer, enters a feedback state, or pauses the session.
+Optional challenge mode may use a 90-second countdown. The final timer scope must be defined intentionally during implementation because the current prototype uses one 90-second timer across the active challenge session rather than resetting it for each question.
 
 A pause feature should preserve the current session state.
 
@@ -124,6 +139,38 @@ Concept mastery should remain simple and understandable:
 - Mastered
 
 The application may track attempts, correct answers, incorrect answers, recency, and mastery percentage. The first implementation should use deterministic rules rather than machine learning.
+
+## Parent Progress analytics
+
+The app should help a parent or guardian understand where the learner is improving and where additional practice is needed.
+
+This should be a local reporting feature built from the child's stored learning history, not a remote analytics or tracking service.
+
+The parent view should answer questions such as:
+
+- Which language pair is the child strongest in?
+- Which language pair needs the most support?
+- Which content categories are strongest?
+- Which categories are still difficult?
+- Which concepts are repeatedly missed?
+- Which previously difficult concepts are improving?
+- How are Progress Check results changing over time?
+- How much of the current content is New, Learning, Familiar, or Mastered?
+
+Useful initial summaries include:
+
+- accuracy by language pair
+- mastery by language pair
+- accuracy by category
+- mastery by category
+- concepts needing practice
+- consistently strong concepts
+- first-attempt success rate
+- reinforcement success
+- recent session history
+- Progress Check trend
+
+Analytics should remain descriptive. The application should not infer intelligence, personality, ability, or other personal traits from quiz performance.
 
 ## Gamification
 
@@ -161,6 +208,32 @@ Typical usage:
 - correct-answer reaction
 - supportive incorrect-answer explanation
 - progress and level-up celebration
+
+## 3D character direction
+
+The study-buddy characters should eventually have 3D versions while preserving the current approved 2D illustrations as the visual reference and fallback.
+
+The 3D layer should be treated as a presentation enhancement, not part of the learning engine.
+
+Possible uses:
+
+- dashboard greetings
+- short correct-answer reactions
+- supportive incorrect-answer reactions
+- badge unlocks
+- level-up celebrations
+- rewards or character gallery
+
+Requirements:
+
+- 2D fallback must remain available
+- 3D must not block lesson content
+- 3D assets should load lazily
+- reduced-motion preferences must be respected
+- motion should reduce or stop during reading-heavy states
+- WebGL failure or poor device performance must not prevent learning
+
+`img2threejs/img2threejs` may be evaluated as a production aid for reconstructing approved character references into procedural Three.js models.
 
 ## Visual direction
 
@@ -206,19 +279,24 @@ Initial accessibility controls:
 
 Script or handwriting fonts should be optional and must never be the default quiz font.
 
+3D character animation must obey the same reduced-motion preference and must never contain information required to answer a question.
+
 ## Progress and recovery
 
 The learner's state should include:
 
+- first name or nickname
 - XP
 - level
 - sessions completed
 - questions answered
 - concept mastery
+- category performance
 - language-pair performance
 - badges
 - progress-check history
 - accessibility preferences
+- structured attempt history sufficient for local Parent Progress analytics
 
 Because storage is local-first, the application must support:
 
@@ -258,19 +336,50 @@ Potential sources include:
 
 `jjjardev/hilisenti` may be useful as a Hiligaynon linguistic and contextual reference. Its current dataset license is CC BY-NC-SA 4.0, so HiliSenti-derived material must remain provenance-aware and must not silently enter unrestricted or commercial content paths.
 
-`img2threejs/img2threejs` may be evaluated later if procedural 3D character or reward elements become useful. It is not required for the MVP.
+`img2threejs/img2threejs` may be evaluated for procedural 3D character production. Its role should remain isolated from the learning and content domains.
+
+## Current prototype status
+
+The supplied Open Design prototype already demonstrates:
+
+- the four language pairs
+- self-paced and challenge interaction modes
+- corrective teaching
+- reinforcement
+- XP, levels, and badges
+- learner progress UI
+- accessibility controls
+- browser read-aloud support
+- child study-buddy illustrations
+
+It does not yet implement the full canonical scope, including:
+
+- Sinag ng Kaalaman branding
+- first-name onboarding
+- 5 / 10 / 20 session lengths
+- scheduled Progress Checks
+- parent analytics
+- backup export and restore
+- pause and active-session recovery
+- IndexedDB persistence
+- 3D study-buddy presentation
+
+See `CURRENT_PROTOTYPE_AUDIT.md` for the reconciled prototype review.
 
 ## MVP success condition
 
 The MVP is successful if a child can:
 
 1. Open the app without creating an account.
-2. Select one of the four initial language pairs.
-3. Complete a self-paced practice session.
-4. Receive useful explanations after mistakes.
-5. Accumulate progress and mastery locally.
-6. Complete periodic progress checks.
-7. Adjust reading and accessibility preferences.
-8. Export and restore progress.
+2. Enter a first name or preferred nickname.
+3. Select one of the four initial language pairs.
+4. Complete a self-paced practice session.
+5. Receive useful explanations after mistakes.
+6. Accumulate progress and mastery locally.
+7. Complete periodic progress checks.
+8. Adjust reading and accessibility preferences.
+9. Export and restore progress.
+10. Have a parent or guardian review local strengths and learning gaps.
+11. Continue learning even when 3D presentation is unavailable.
 
 Everything beyond that is secondary until the learning loop is validated.
