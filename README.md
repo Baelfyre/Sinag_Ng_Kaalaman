@@ -84,6 +84,20 @@ These analytics are educational summaries derived from local learner activity, n
 - Only the learner's first name or nickname is required for personalization.
 - Parent analytics remain local to the browser profile and exported backup.
 
+## Celebration effects
+
+The app may use lightweight celebratory feedback such as sparkles, glitter, banners, ribbons, confetti, badge reveals, XP animations, and study-buddy reactions.
+
+Celebration intensity should match the importance of the event:
+
+- small sparkle or glow for ordinary correct answers
+- short confetti or banner feedback for session completion
+- stronger confetti, badge reveals, or character celebrations for meaningful milestones such as level-ups, badge unlocks, mastery milestones, or major Progress Check improvement
+
+Celebrations must not cover lesson content, block navigation, or become continuous background effects. Reduced-motion mode must replace unnecessary particle movement with calmer visual feedback.
+
+See [`docs/CELEBRATION_EFFECTS.md`](docs/CELEBRATION_EFFECTS.md) for the canonical effect hierarchy and accessibility rules.
+
 ## Character presentation
 
 Recurring school-age study-buddy characters are part of the visual identity.
@@ -119,6 +133,7 @@ Source collection has started under [`data/`](data/) and is governed by provenan
 - [Prime Directive](docs/PRIME_DIRECTIVE.md)
 - [Current Prototype Audit](docs/CURRENT_PROTOTYPE_AUDIT.md)
 - [Dataset and Content Sources](docs/DATASET_AND_CONTENT_SOURCES.md)
+- [Celebration Effects](docs/CELEBRATION_EFFECTS.md)
 
 ## Current phase
 
