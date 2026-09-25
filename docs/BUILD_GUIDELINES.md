@@ -29,9 +29,10 @@ The initial project priority is:
 2. build a reviewed concept set
 3. validate question quality
 4. establish the learning loop
-5. initialize the visual design
-6. implement the local learning engine
-7. add gamification and polish
+5. reconcile the Open Design prototype with canonical requirements
+6. implement the local learning and progress model
+7. add parent reporting, gamification, and polish
+8. add 3D character presentation only after a lightweight proof of concept passes performance and accessibility checks
 
 A beautiful interface with weak educational content is not considered a successful milestone.
 
@@ -102,6 +103,24 @@ Desktop and mobile layouts should adapt without changing the learning model.
 
 Quiz screens should minimize unnecessary scrolling and preserve large answer controls.
 
+### 9. Collect only the identity the app needs
+
+The MVP may ask for the learner's first name or preferred nickname for personalization.
+
+Do not require age, birth date, full legal name, email address, or account registration.
+
+The name must remain local, editable, and included in backup export and restore.
+
+### 10. Parent analytics must remain local and educational
+
+Parent Progress analytics should be calculated from local learner activity.
+
+Do not add third-party behavioral analytics or remote telemetry to implement the parent dashboard.
+
+Analytics should report observed learning outcomes such as language-pair performance, category performance, mastery, recurring errors, strengths, and Progress Check trends.
+
+Do not infer intelligence, personality, capability, diagnosis, or other personal traits from quiz results.
+
 ## Design direction
 
 The visual style should be:
@@ -119,17 +138,20 @@ Avoid visual clutter, constant confetti, excessive animation, permanent timers, 
 
 ## Initial design surfaces
 
-The initial Open Design pass should establish:
+The established design system should support:
 
-1. Home Dashboard
-2. Language Pair Selection
-3. Activity Selection
-4. Quiz Question
-5. Correct Answer Feedback
-6. Incorrect Answer Teaching Feedback
-7. Session Results
-8. Progress Dashboard
-9. Accessibility / Settings
+1. Learner Name Onboarding
+2. Home Dashboard
+3. Language Pair Selection
+4. Activity Selection
+5. Quiz Question
+6. Correct Answer Feedback
+7. Incorrect Answer Teaching Feedback
+8. Session Results
+9. Learner Progress Dashboard
+10. Parent Progress Analytics
+11. Accessibility / Settings
+12. Backup Export / Restore
 
 Additional screens should derive from the established component system instead of inventing new visual patterns unnecessarily.
 
@@ -210,11 +232,33 @@ Treat HiliSenti-derived content as license-bound unless a separate review determ
 
 The MVP should collect no more learner information than required for local use.
 
+Allowed initial identity field:
+
+- first name or preferred nickname
+
 Avoid storing sensitive personal data.
 
 Do not add telemetry, third-party tracking, advertising identifiers, or behavioral analytics without a deliberate future review.
 
 Local progress should be inspectable and exportable.
+
+## Parent Progress analytics requirements
+
+The production progress model should preserve enough structured history to calculate, at minimum:
+
+- attempts and accuracy by language pair
+- attempts and accuracy by content category
+- mastery by language pair and category
+- repeatedly missed concepts
+- consistently strong concepts
+- first-attempt success
+- reinforcement success
+- Progress Check history and trend
+- recent session counts
+
+Prefer derived summaries over storing redundant analytics values when the same result can be calculated reliably from local attempt history.
+
+The dashboard should show both strengths and areas needing practice rather than focusing only on mistakes.
 
 ## Progress safety
 
@@ -257,6 +301,24 @@ Do not expand beyond these initial pairs until the first content and learning lo
 
 Additional languages or pairings require explicit scope expansion.
 
+## 3D study-buddy guidelines
+
+The current 2D study-buddy illustrations are the visual reference and fallback.
+
+3Dification should follow these rules:
+
+- use simplified, web-optimized models
+- keep 3D presentation isolated from learning logic
+- lazy-load 3D code and assets
+- preserve a complete 2D fallback
+- do not require WebGL to complete a lesson
+- respect reduced-motion preferences
+- reduce or stop animation while the child reads questions and explanations
+- test tablet performance before making 3D the preferred presentation
+- do not download large character assets before the learner needs them
+
+`img2threejs/img2threejs` may be evaluated as a production aid for generating procedural Three.js models from the approved reference art. Its use does not replace project-specific optimization and validation.
+
 ## Testing expectations
 
 Implementation work should include validation appropriate to the change.
@@ -277,9 +339,19 @@ Implementation work should include validation appropriate to the change.
 - progress-check sampling
 - XP and badge rules
 
+### Parent analytics validation
+
+- correct aggregation by language pair
+- correct aggregation by category
+- strengths and needs-practice thresholds
+- Progress Check trend calculation
+- no remote analytics dependency
+- summaries update after new sessions
+
 ### Persistence validation
 
 - save and reload
+- learner-name persistence and editing
 - interrupted-session recovery
 - export
 - import
@@ -294,19 +366,32 @@ Implementation work should include validation appropriate to the change.
 - reduced motion
 - contrast
 - focus visibility
+- 3D fallback and reduced-motion behavior
 
 ### Responsive validation
 
 At minimum, validate representative mobile, tablet, and desktop widths.
 
+### 3D validation
+
+Before 3D presentation is enabled by default, validate:
+
+- initial load impact
+- lazy-loading behavior
+- rendering performance on representative tablets
+- WebGL-unavailable fallback
+- reduced-motion behavior
+- no overlap with question or feedback text
+- no loss of functionality when the 3D layer fails
+
 ## Build sequence
 
-### Phase 0: Definition
+### Phase 0: Definition and prototype reconciliation
 
 - project documentation
 - content model
-- design direction
 - source and license review
+- audit the Open Design prototype against canonical requirements
 
 ### Phase 1: Content foundation
 
@@ -315,29 +400,34 @@ At minimum, validate representative mobile, tablet, and desktop widths.
 - validated JSON schema
 - reviewed sample question bank
 
-### Phase 2: Learning engine
+### Phase 2: Learner profile and learning engine
 
+- first-name or nickname onboarding
 - session generation
 - answer evaluation
 - corrective teaching
 - mastery states
 - reinforcement
-- progress checks
+- Progress Checks
 
-### Phase 3: Local persistence
+### Phase 3: Local persistence and reporting data
 
 - IndexedDB state
+- structured attempt history
 - active-session recovery
 - export
 - restore
+- local analytics aggregation
 
-### Phase 4: Core interface
+### Phase 4: Core interface reconciliation
 
+- Sinag ng Kaalaman branding
 - Open Design-derived component system
 - dashboard
 - quiz flow
 - feedback states
-- progress
+- learner progress
+- Parent Progress analytics
 - settings
 
 ### Phase 5: Gamification
@@ -355,24 +445,32 @@ At minimum, validate representative mobile, tablet, and desktop widths.
 - reduced motion
 - assistive-technology review
 
-### Phase 7: Optional enhancements
+### Phase 7: 3D study-buddy enhancement
+
+- 3D proof of concept from approved 2D characters
+- rendering adapter
+- tablet performance validation
+- 2D fallback validation
+- reduced-motion validation
+- limited integration into greetings and celebrations
+
+### Phase 8: Optional future enhancements
 
 Only after the core learning loop is validated:
 
-- read-aloud expansion
-- richer animation
-- optional procedural 3D presentation
 - additional languages
 - additional quiz modes
+- richer character interactions
+- other network-dependent features with a demonstrated learning requirement
 
 ## Change discipline
 
 Before adding a feature, answer:
 
-1. What learner problem does it solve?
-2. Does it improve understanding, retention, accessibility, or recoverability?
+1. What learner or parent problem does it solve?
+2. Does it improve understanding, retention, accessibility, recoverability, or useful learning visibility?
 3. Can the same result be achieved more simply?
-4. Does it introduce privacy, licensing, or maintenance risk?
+4. Does it introduce privacy, licensing, performance, or maintenance risk?
 5. Does it expand the approved MVP scope?
 
 If the feature cannot answer these clearly, defer it.
@@ -387,6 +485,7 @@ It should be considered complete only when:
 - relevant validation passes
 - accessibility impact is considered
 - local persistence impact is considered
+- privacy impact is considered
 - source/license obligations are satisfied
 - documentation is updated when behavior or architecture changes
 
