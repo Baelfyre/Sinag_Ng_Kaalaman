@@ -25,7 +25,7 @@ Duration should be brief and should not delay the learner from continuing.
 
 ### Level 2: Session celebration
 
-Appropriate for completing a Quick Practice, Regular Practice, or Progress Check.
+Appropriate for completing a Quick Practice, Normal Practice, or Periodic Progress Check.
 
 Possible effects:
 
@@ -41,13 +41,13 @@ The educational results summary must remain readable while the effect runs.
 
 Reserve stronger effects for meaningful milestones such as:
 
-- badge unlocked
+- badge earned
 - level up
 - concept mastery milestone
 - spelling milestone
 - completing all four initial language paths
-- major practice streak milestone
-- substantial Progress Check improvement
+- major practice-consistency milestone
+- substantial Periodic Progress Check improvement
 
 Possible effects:
 
@@ -96,6 +96,8 @@ Banners can be used for short milestone messages such as:
 - `Badge Unlocked!`
 - `Progress Check Complete!`
 - `New Word Mastered!`
+
+`Progress Check Complete!` remains acceptable as compact celebration copy even though the full activity label is **Periodic Progress Check**.
 
 Banners should use clear text and must not rely on animation or color alone to communicate the event.
 
@@ -148,6 +150,8 @@ LEVEL_UP
 STREAK_MILESTONE
 LANGUAGE_PATH_MILESTONE
 ```
+
+Internal event names may remain stable even when learner-facing copy uses **Periodic Progress Check** or **Earned**.
 
 A celebration service or presentation layer can map these events to effects.
 
