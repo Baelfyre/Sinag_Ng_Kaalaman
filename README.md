@@ -29,14 +29,43 @@ Hiligaynon is treated as a language in its own right, not as a dialect label.
 3. Receive immediate feedback.
 4. If an answer is incorrect, explain the selected answer, reveal the correct answer, and explain why it fits.
 5. Reintroduce difficult concepts later for reinforcement.
-6. Track mastery, spelling performance, XP, levels, badges, and periodic Progress Checks.
+6. Track mastery, spelling performance, XP, levels, badges, and Periodic Progress Checks.
 7. Surface strengths and learning gaps to the parent or guardian through local progress analytics.
 
 The default experience is self-paced:
 
 `Question -> Answer -> Explanation -> Next`
 
-Timed challenge mode is optional.
+Challenge Mode with an optional 90-second timer is available as a secondary activity and does not penalize mistakes.
+
+## Open Design UI semantics
+
+The current Open Design wording is the preferred learner-facing vocabulary for implementation.
+
+Primary navigation:
+
+- Home
+- Practice
+- Progress
+- Rewards
+- Parent Progress
+- Settings
+
+Practice exercise styles:
+
+- Mixed Practice (All Types)
+- Multiple Choice
+- Spelling Studio
+- Comprehension
+
+Session modes:
+
+- Normal Practice
+- Quick Practice
+- Periodic Progress Check
+- Challenge Mode (Optional 90-second timer)
+
+See [`docs/UI_SEMANTICS_AND_MATERIAL_SYMBOLS.md`](docs/UI_SEMANTICS_AND_MATERIAL_SYMBOLS.md) for the canonical UI wording, reward display names, status labels, and Material Symbols mapping.
 
 ## Exercise direction
 
@@ -97,7 +126,7 @@ The app collects only the minimum identity needed for personalization.
 - Allow the name to be edited later.
 - Include the name in exported progress backups.
 
-Learner-facing copy should use **Grade School Level** rather than a fixed Grade 4 & 5 label.
+Learner-facing copy uses **Grade School Level** rather than a fixed Grade 4 & 5 label.
 
 ## Session models
 
@@ -106,15 +135,15 @@ Default session lengths:
 | Activity | Questions |
 | --- | ---: |
 | Quick Practice | 5 |
-| Regular Practice | 10 |
-| Progress Check | 20 |
+| Normal Practice | 10 |
+| Periodic Progress Check | 20 |
 
 A proposed cadence is:
 
-- 4 Regular Practice sessions
-- then 1 Progress Check
+- 4 Normal Practice sessions
+- then 1 Periodic Progress Check
 
-Progress Checks are intended to measure retention, not speed.
+Periodic Progress Checks are intended to measure retention, not speed.
 
 ## Mastery model
 
@@ -145,7 +174,7 @@ The local Parent Progress view should summarize:
 - mastery distribution
 - reinforcement success
 - recent session history
-- Progress Check history and improvement over time
+- Periodic Progress Check history and improvement over time
 
 Analytics are descriptive educational summaries. The app should not infer intelligence, personality, diagnosis, or capability from quiz performance.
 
@@ -166,7 +195,7 @@ Sharing rules:
 
 The intent is to let families celebrate learning progress while also helping others discover Sinag ng Kaalaman naturally.
 
-## Rewards and badges
+## Rewards & Milestones
 
 Gamification supports learning but must never replace it.
 
@@ -181,15 +210,29 @@ Initial mechanics include:
 - study-buddy reactions
 - celebration effects
 
-Rewards should represent meaningful learning actions such as practice consistency, language exploration, vocabulary mastery, spelling progress, and improvement.
+The Open Design reward surface uses these learner-facing summary terms:
 
-Badge artwork is stored as project artifacts and should use a consistent Sinag ng Kaalaman visual language.
+- Badges Earned
+- In Progress
+- Total Sunshine Points
+- Learner Rank
 
-Badge states:
+Badge states are:
 
-- Unlocked
+- Earned
 - In Progress
 - Locked
+
+Reward categories are:
+
+- Getting Started
+- Practice & Consistency
+- Language Exploration
+- Vocabulary & Mastery
+- Spelling & Recall
+- Progress & Milestones
+
+Stable achievement IDs should be used for implementation. Current display names and taglines are defined in [`docs/UI_SEMANTICS_AND_MATERIAL_SYMBOLS.md`](docs/UI_SEMANTICS_AND_MATERIAL_SYMBOLS.md), allowing artwork filenames to be reconciled without coupling domain rules to a temporary title.
 
 Mistakes should never remove XP.
 
@@ -210,7 +253,7 @@ Celebration intensity should match the importance of the event:
 
 - small sparkle or glow for ordinary correct answers
 - short confetti or banner feedback for session completion
-- stronger celebration for badge unlocks, level-ups, mastery milestones, major spelling milestones, or significant Progress Check improvement
+- stronger celebration for badge unlocks, level-ups, mastery milestones, major spelling milestones, or significant Periodic Progress Check improvement
 
 Celebrations must not:
 
@@ -241,7 +284,7 @@ Possible semantic events include:
 - XP gained
 - badge unlocked
 - level up
-- Progress Check complete
+- Periodic Progress Check complete
 
 Sound requirements:
 
@@ -291,6 +334,23 @@ The logo visual language uses:
 - green for growth and progress
 
 Do not place the logo inside a white rectangular background.
+
+## Icon system
+
+Normal application actions and semantic UI states should use **Material Symbols Rounded** through a shared icon layer.
+
+The current Open Design inline SVG registry is a prototype implementation detail and should not be copied into production feature components.
+
+Dedicated platform identities remain separate brand assets for:
+
+- GitHub
+- LinkedIn
+- Facebook
+- Buy Me a Coffee
+
+Approved badge artwork should be used for individual achievements. Material Symbols remain appropriate for category headers, filters, status chips, actions, and fallbacks.
+
+See [`docs/UI_SEMANTICS_AND_MATERIAL_SYMBOLS.md`](docs/UI_SEMANTICS_AND_MATERIAL_SYMBOLS.md) for the exact mapping.
 
 ## Developer & Project Support
 
@@ -358,13 +418,15 @@ No state should be communicated through color alone.
 
 Because the app is local-first, learner progress must be recoverable.
 
-The app supports:
+The Open Design feature is presented as **Progress Portability & Data Control** in Settings and **Data & Progress Portability** in Parent Progress.
 
-- local persistence
-- active-session recovery
+Primary actions are:
+
 - Export Progress
 - Import Progress
 - Reset Progress
+
+The UI may use the more explicit button labels **Export Progress Backup** and **Import Progress Backup**.
 
 Export format:
 
@@ -375,8 +437,10 @@ Import requirements:
 - validate file structure
 - validate schema version
 - reject malformed or unsupported backups
-- show a backup summary before restoring
+- show a backup summary before replacing current progress
 - require explicit confirmation before replacing current progress
+
+A confirmation dialog may explain that importing will restore or replace current browser progress, but **Import Progress** remains the primary feature label.
 
 Reset or overwrite operations must also require confirmation.
 
@@ -430,16 +494,18 @@ External sources remain references or optional inputs until licensing, provenanc
 
 ## Current development phase
 
-The frontend design scope is substantially defined and is being finalized through Open Design.
+The Open Design frontend now serves as the primary visual and interaction handoff reference.
 
 Current direction:
 
-1. finish and review the Open Design frontend
-2. audit the generated screens against canonical project requirements
-3. reconcile frontend states with the learning engine
-4. wire local persistence, analytics, audio events, celebration events, rewards, import/export, and content JSON
-5. synchronize the implementation with the repository
-6. defer 3D study-buddy reconstruction to the next development phase
+1. audit and preserve the preferred Open Design wording and interaction semantics
+2. replace prototype inline SVG icons with the documented Material Symbols Rounded layer
+3. reconcile badge artwork with stable achievement IDs and current display names
+4. wire the design to the production learning engine
+5. move structured learner state from prototype storage to the production local persistence layer
+6. connect local analytics, audio events, celebration events, rewards, and progress portability
+7. synchronize implementation with the repository
+8. defer 3D study-buddy reconstruction to the next development phase
 
 The current 2D experience remains the production fallback even after future 3D experimentation.
 
@@ -452,6 +518,7 @@ The current 2D experience remains the production fallback even after future 3D e
 - [Current Prototype Audit](docs/CURRENT_PROTOTYPE_AUDIT.md)
 - [Dataset and Content Sources](docs/DATASET_AND_CONTENT_SOURCES.md)
 - [Celebration Effects](docs/CELEBRATION_EFFECTS.md)
+- [UI Semantics and Material Symbols](docs/UI_SEMANTICS_AND_MATERIAL_SYMBOLS.md)
 
 ## MVP success condition
 
@@ -460,11 +527,11 @@ The MVP is successful if a learner can:
 1. Open the app without creating an account.
 2. Enter a first name or preferred nickname.
 3. Select one of the initial language pairs.
-4. Complete a self-paced learning session.
+4. Complete a self-paced Normal Practice session.
 5. Practice vocabulary, comprehension, translation, and spelling.
 6. Receive useful corrective explanations after mistakes.
 7. Build and retain local mastery progress.
-8. Complete periodic Progress Checks.
+8. Complete Periodic Progress Checks.
 9. Adjust accessibility and reading preferences.
 10. Export and import learner progress safely.
 11. Earn meaningful learning rewards without feature paywalls.
