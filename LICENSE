@@ -1,0 +1,45 @@
+Sinag ng Kaalaman Project Licensing
+
+This repository is source-available for noncommercial use.
+
+Because commercial use is restricted, the project is not licensed under an OSI-approved open-source license. Different parts of the repository use different licenses as described below.
+
+1. Software
+
+Unless a file states otherwise, original software source code, scripts, configuration, and software implementation in this repository are licensed under the PolyForm Noncommercial License 1.0.0.
+
+Canonical terms:
+https://polyformproject.org/licenses/noncommercial/1.0.0
+
+See LICENSES/SOFTWARE.md for scope and project-specific notice.
+
+2. Original educational content, documentation, and project artwork
+
+Unless a file states otherwise, original non-code material created for Sinag ng Kaalaman, including educational content, documentation text, project-specific illustrations, badges, and branding assets, is licensed under Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0).
+
+Canonical license:
+https://creativecommons.org/licenses/by-nc-sa/4.0/
+
+See LICENSES/CONTENT.md for scope and attribution guidance.
+
+3. Third-party material
+
+Third-party software, datasets, corpora, reference material, fonts, icons, and other external works remain under their own licenses or terms. Nothing in this repository relicenses third-party material.
+
+See THIRD_PARTY_NOTICES.md and data/source_registry.json.
+
+4. Commercial use
+
+Commercial use of Sinag ng Kaalaman software is not permitted under the default software license. Commercial use of original project content licensed under CC BY-NC-SA 4.0 is also not permitted under that license.
+
+Separate commercial permission may be granted only by the applicable rights holder and only for material that rights holder has authority to license. Separate permission from the Sinag ng Kaalaman project owner does not override third-party license restrictions.
+
+5. File-specific notices
+
+If a file or directory contains a more specific license, copyright notice, attribution requirement, or third-party term, that specific notice controls for that material.
+
+6. Contributions
+
+Unless explicitly agreed otherwise before contribution, contributions submitted for inclusion in this repository are intended to be distributed under the license applicable to the part of the project they modify or extend.
+
+No warranty is provided beyond the terms of the applicable licenses.
