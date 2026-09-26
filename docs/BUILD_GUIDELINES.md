@@ -6,6 +6,8 @@ These guidelines define how Sinag ng Kaalaman should be designed, built, reviewe
 
 The project should remain understandable, local-first, accessible, and focused on learning outcomes rather than feature count.
 
+For learner-facing wording, reward names, and icon semantics, [`UI_SEMANTICS_AND_MATERIAL_SYMBOLS.md`](UI_SEMANTICS_AND_MATERIAL_SYMBOLS.md) is the current canonical handoff reference.
+
 ## Development principles
 
 ### 1. Keep the architecture simple
@@ -23,18 +25,18 @@ Do not introduce:
 
 ### 2. Content before complexity
 
-The initial project priority is:
+The initial priority is:
 
 1. define the content model
 2. build a reviewed concept set
 3. validate question quality
 4. establish the learning loop
-5. reconcile the Open Design prototype with canonical requirements
+5. reconcile the Open Design handoff with production architecture
 6. implement the local learning and progress model
 7. add parent reporting, gamification, and polish
 8. add 3D character presentation only after a lightweight proof of concept passes performance and accessibility checks
 
-A beautiful interface with weak educational content is not considered a successful milestone.
+A polished interface with weak educational content is not a successful milestone.
 
 ### 3. Build around concepts, not isolated translations
 
@@ -42,7 +44,7 @@ Content should be organized around canonical concepts with language-specific rep
 
 Do not assume every English, Tagalog, or Hiligaynon word has an exact one-to-one equivalent.
 
-When a translation is uncertain or context-dependent, mark it for review instead of forcing a false equivalence.
+When a translation is uncertain or context-dependent, mark it for review rather than forcing a false equivalence.
 
 ### 4. Wrong answers must teach
 
@@ -53,19 +55,42 @@ The application should explain:
 - what the learner selected
 - what the selected answer means
 - what the correct answer is
+- what the correct answer means
 - why the correct answer fits better
 
 Difficult concepts should be reintroduced later using a different question or sentence when practical.
 
+Avoid punitive learner-facing wording such as `WRONG` or `FAILED`.
+
 ### 5. Self-paced by default
 
-Normal learning sessions must be self-paced.
+Normal Practice is self-paced.
 
-The learner should explicitly continue after reading feedback.
+The learner explicitly continues after reading feedback.
 
-Timed activities are optional challenge modes only.
+Challenge Mode is optional and may use the Open Design label **Challenge Mode (Optional 90-second timer)**. Timed practice must not impose XP loss, letter grades, or punitive consequences.
 
-### 6. Gamification supports learning
+### 6. Use Open Design wording consistently
+
+Preferred learner-facing exercise labels:
+
+- Mixed Practice (All Types)
+- Multiple Choice
+- Spelling Studio
+- Comprehension
+
+Preferred session labels:
+
+- Quick Practice
+- Normal Practice
+- Periodic Progress Check
+- Challenge Mode (Optional 90-second timer)
+
+Do not reintroduce `Regular Practice` as the main learner-facing label.
+
+Internal identifiers may remain technical and stable even when display copy changes.
+
+### 7. Gamification supports learning
 
 XP, levels, badges, streaks, and celebrations should reinforce practice and mastery.
 
@@ -77,11 +102,11 @@ Do not:
 - pressure the learner to continue indefinitely
 - design streaks so aggressively that missing a day feels like failure
 
-### 7. Accessibility is not optional
+Use stable achievement IDs for implementation. Display names, taglines, categories, and status terms are defined in the UI semantics document.
 
-Every major interface should be usable with the supported accessibility profiles.
+### 8. Accessibility is not optional
 
-Design and implementation must account for:
+Every major interface should support:
 
 - readable font choices
 - scalable text
@@ -91,54 +116,99 @@ Design and implementation must account for:
 - large touch targets
 - reduced motion
 - screen-reader-friendly labels
-- read-aloud support when implemented
+- read-aloud support where implemented
 
 No state should be communicated through color alone.
 
-### 8. Tablet-first, responsive everywhere
+### 9. Responsive and device-neutral
 
-The primary design target is tablet use by a Grade 4 to Grade 5 learner.
+The production app is browser-based, responsive, and device-neutral.
 
-Desktop and mobile layouts should adapt without changing the learning model.
+Do not design the architecture around a tablet-only or tablet-first assumption.
 
-Quiz screens should minimize unnecessary scrolling and preserve large answer controls.
+Representative mobile, tablet, laptop, and desktop widths should preserve the same learning model.
 
-### 9. Collect only the identity the app needs
+Quiz screens should minimize unnecessary scrolling, preserve readable text, and retain large answer controls.
 
-The MVP may ask for the learner's first name or preferred nickname for personalization.
+### 10. Collect only the identity the app needs
+
+The MVP may ask for the learner's first name or preferred nickname.
 
 Do not require age, birth date, full legal name, email address, or account registration.
 
-The name must remain local, editable, and included in backup export and restore.
+The name must remain local, editable, and included in progress export/import.
 
-### 10. Parent analytics must remain local and educational
+Learner-facing level wording is **Grade School Level**. Historical or curriculum notes may still mention the original Grade 4 to Grade 5 target when relevant.
+
+### 11. Parent analytics must remain local and educational
 
 Parent Progress analytics should be calculated from local learner activity.
 
 Do not add third-party behavioral analytics or remote telemetry to implement the parent dashboard.
 
-Analytics should report observed learning outcomes such as language-pair performance, category performance, mastery, recurring errors, strengths, and Progress Check trends.
+Analytics should report observed outcomes such as:
+
+- language-pair performance
+- category performance
+- mastery
+- recurring errors
+- strengths
+- reinforcement success
+- Periodic Progress Check trends
 
 Do not infer intelligence, personality, capability, diagnosis, or other personal traits from quiz results.
 
-## Design direction
+## Icon and visual semantics
 
-The visual style should be:
+### Material Symbols Rounded
 
-- colorful
-- energetic
-- clean
-- friendly
-- modern
-- child-appropriate without appearing preschool-oriented
+Use **Material Symbols Rounded** for normal application actions and semantic UI states.
 
-Use recurring school-age child characters as learning companions.
+Do not copy the Open Design inline SVG registry into production feature components.
 
-Avoid visual clutter, constant confetti, excessive animation, permanent timers, and overly competitive framing.
+Use a shared icon component/helper so that icon rendering is centralized.
+
+Examples:
+
+- Home -> `home`
+- Practice -> `menu_book`
+- Progress -> `monitoring`
+- Settings -> `settings`
+- Mixed Practice -> `auto_awesome`
+- Spelling Studio -> `spellcheck`
+- Comprehension -> `lightbulb`
+- Export Progress -> `download`
+- Import Progress -> `upload_file`
+- Reset Progress -> `restart_alt`
+
+The complete mapping is maintained in [`UI_SEMANTICS_AND_MATERIAL_SYMBOLS.md`](UI_SEMANTICS_AND_MATERIAL_SYMBOLS.md).
+
+### Brand-logo exception
+
+Use dedicated recognizable logos for:
+
+- GitHub
+- LinkedIn
+- Facebook
+- Buy Me a Coffee
+
+Do not substitute Material Symbols for platform identity marks.
+
+### Badge-art exception
+
+Use approved badge artwork for individual achievement cards when available.
+
+Material Symbols may be used for:
+
+- category headers
+- filters
+- status chips
+- empty states
+- fallback rendering
 
 ## Initial design surfaces
 
-The established design system should support:
+The production component system should support:
 
 1. Learner Name Onboarding
 2. Home Dashboard
@@ -148,16 +218,43 @@ The established design system should support:
 6. Correct Answer Feedback
 7. Incorrect Answer Teaching Feedback
 8. Session Results
-9. Learner Progress Dashboard
-10. Parent Progress Analytics
-11. Accessibility / Settings
-12. Backup Export / Restore
+9. Learner Progress
+10. Rewards & Milestones
+11. Parent Progress
+12. Settings / Accessibility
+13. Progress Portability & Data Control
+14. About the Developer
+15. Support Development
 
-Additional screens should derive from the established component system instead of inventing new visual patterns unnecessarily.
+Additional screens should derive from the established component system rather than inventing unrelated visual patterns.
+
+## Spelling rules
+
+Spelling Studio should support a progression from recognition to active recall.
+
+For Tagalog and Hiligaynon, prefer syllable-aware presentation when practical.
+
+Example:
+
+`MAG | LA | KAD`
+
+A missing-syllable activity may appear as:
+
+`MAG | __ | KAD`
+
+Input validation requirements:
+
+- letters only for single-word or syllable fields
+- Unicode-aware alphabetic validation
+- ignore case during answer comparison
+- trim leading and trailing spaces
+- no silent autocorrection
+- reject numbers, emoji, and unrelated symbols
+- allow internal spaces only when the canonical answer is intentionally multi-word
+
+Validation and answer correctness are separate concerns.
 
 ## Content quality rules
-
-### Required for canonical content
 
 Each canonical concept should eventually include:
 
@@ -172,11 +269,7 @@ Each canonical concept should eventually include:
 - source provenance
 - review state
 
-Fields may be incomplete during drafting, but incomplete content must not be represented as verified.
-
-### Review states
-
-Recommended states:
+Recommended review states:
 
 ```text
 DRAFT
@@ -185,15 +278,11 @@ VERIFIED
 REJECTED
 ```
 
-Language-specific review status is preferred because one language mapping may be verified while another remains uncertain.
+Language-specific review status is preferred because one mapping may be verified while another remains uncertain.
 
-### AI-generated content
+AI may assist with drafting, brainstorming, or generating candidate variants, but AI-generated educational content must not become canonical automatically.
 
-AI may assist with drafting, brainstorming, or generating candidate variants.
-
-AI-generated educational content must not become canonical automatically.
-
-Before being marked verified, content should be checked for:
+Before verification, content should be checked for:
 
 - linguistic correctness
 - natural phrasing
@@ -216,17 +305,9 @@ At minimum, record:
 - share-alike requirements
 - whether the project content is derivative
 
-### Non-commercial material
-
 Non-commercial material must remain identifiable so it can be removed or replaced if the project later adopts a commercial distribution model.
 
-Do not silently mix non-commercial datasets into unrestricted core content.
-
-### HiliSenti boundary
-
-HiliSenti is currently useful as a Hiligaynon research and contextual reference. Its dataset is CC BY-NC-SA 4.0.
-
-Treat HiliSenti-derived content as license-bound unless a separate review determines otherwise.
+HiliSenti remains useful as a Hiligaynon research and contextual reference. Its dataset is CC BY-NC-SA 4.0, so derived content must remain license-aware.
 
 ## Data and privacy rules
 
@@ -238,38 +319,29 @@ Allowed initial identity field:
 
 Avoid storing sensitive personal data.
 
-Do not add telemetry, third-party tracking, advertising identifiers, or behavioral analytics without a deliberate future review.
+Do not add telemetry, third-party tracking, advertising identifiers, or behavioral analytics without deliberate future review.
 
 Local progress should be inspectable and exportable.
 
-## Parent Progress analytics requirements
+## Progress portability
 
-The production progress model should preserve enough structured history to calculate, at minimum:
+Use the Open Design feature wording:
 
-- attempts and accuracy by language pair
-- attempts and accuracy by content category
-- mastery by language pair and category
-- repeatedly missed concepts
-- consistently strong concepts
-- first-attempt success
-- reinforcement success
-- Progress Check history and trend
-- recent session counts
+- **Progress Portability & Data Control** in Settings
+- **Data & Progress Portability** in Parent Progress
 
-Prefer derived summaries over storing redundant analytics values when the same result can be calculated reliably from local attempt history.
+Primary actions:
 
-The dashboard should show both strengths and areas needing practice rather than focusing only on mistakes.
+- Export Progress
+- Import Progress
+- Reset Progress
 
-## Progress safety
+Buttons may use the more explicit labels:
 
-Learner progress must be recoverable.
+- Export Progress Backup
+- Import Progress Backup
 
-The application should support:
-
-- local persistence
-- active-session recovery
-- explicit backup export
-- validated restore
+Import must validate the file and show a summary before replacing current progress. A confirmation dialog may use `restore` descriptively, but **Import Progress** remains the primary feature label.
 
 Reset or overwrite operations require confirmation.
 
@@ -280,19 +352,19 @@ Initial defaults:
 | Activity | Questions |
 | --- | ---: |
 | Quick Practice | 5 |
-| Regular Practice | 10 |
-| Progress Check | 20 |
+| Normal Practice | 10 |
+| Periodic Progress Check | 20 |
 
-Proposed scheduled Progress Check cadence:
+Proposed cadence:
 
-- 4 regular sessions
-- then 1 Progress Check
+- 4 Normal Practice sessions
+- then 1 Periodic Progress Check
 
 These values are configuration defaults, not immutable educational claims.
 
 ## Initial language scope
 
-Do not expand beyond these initial pairs until the first content and learning loop are stable:
+Do not expand beyond these pairs until the first content and learning loop are stable:
 
 - English -> Tagalog
 - English -> Hiligaynon
@@ -303,32 +375,29 @@ Additional languages or pairings require explicit scope expansion.
 
 ## 3D study-buddy guidelines
 
-The current 2D study-buddy illustrations are the visual reference and fallback.
+The current 2D study-buddy illustrations remain the visual reference and fallback.
 
-3Dification should follow these rules:
+3Dification should:
 
 - use simplified, web-optimized models
-- keep 3D presentation isolated from learning logic
+- remain isolated from learning logic
 - lazy-load 3D code and assets
 - preserve a complete 2D fallback
-- do not require WebGL to complete a lesson
+- never require WebGL to complete a lesson
 - respect reduced-motion preferences
-- reduce or stop animation while the child reads questions and explanations
-- test tablet performance before making 3D the preferred presentation
-- do not download large character assets before the learner needs them
+- reduce or stop animation during reading-intensive states
+- be performance-tested across representative devices
 
-`img2threejs/img2threejs` may be evaluated as a production aid for generating procedural Three.js models from the approved reference art. Its use does not replace project-specific optimization and validation.
+`img2threejs/img2threejs` may be evaluated as a production aid. It must not become a dependency of the learning domain.
 
 ## Testing expectations
-
-Implementation work should include validation appropriate to the change.
 
 ### Content validation
 
 - schema validation
 - required-field checks
 - duplicate concept detection
-- unsupported language code checks
+- unsupported language-code checks
 - source/provenance checks
 
 ### Learning engine validation
@@ -336,15 +405,16 @@ Implementation work should include validation appropriate to the change.
 - correct answer resolution
 - reinforcement behavior
 - mastery updates
-- progress-check sampling
+- Periodic Progress Check sampling
 - XP and badge rules
+- Spelling Studio validation and near-miss handling
 
 ### Parent analytics validation
 
-- correct aggregation by language pair
-- correct aggregation by category
+- aggregation by language pair
+- aggregation by category
 - strengths and needs-practice thresholds
-- Progress Check trend calculation
+- Periodic Progress Check trend calculation
 - no remote analytics dependency
 - summaries update after new sessions
 
@@ -353,8 +423,8 @@ Implementation work should include validation appropriate to the change.
 - save and reload
 - learner-name persistence and editing
 - interrupted-session recovery
-- export
-- import
+- Export Progress
+- Import Progress
 - invalid backup rejection
 - schema-version handling
 
@@ -366,39 +436,29 @@ Implementation work should include validation appropriate to the change.
 - reduced motion
 - contrast
 - focus visibility
-- 3D fallback and reduced-motion behavior
+- screen-reader labels
+- 3D fallback behavior
 
 ### Responsive validation
 
-At minimum, validate representative mobile, tablet, and desktop widths.
-
-### 3D validation
-
-Before 3D presentation is enabled by default, validate:
-
-- initial load impact
-- lazy-loading behavior
-- rendering performance on representative tablets
-- WebGL-unavailable fallback
-- reduced-motion behavior
-- no overlap with question or feedback text
-- no loss of functionality when the 3D layer fails
+Validate representative mobile, tablet, laptop, and desktop widths.
 
 ## Build sequence
 
-### Phase 0: Definition and prototype reconciliation
+### Phase 0: Definition and Open Design handoff
 
 - project documentation
 - content model
 - source and license review
-- audit the Open Design prototype against canonical requirements
+- Open Design semantic audit
+- Material Symbols mapping
 
 ### Phase 1: Content foundation
 
 - initial categories
-- initial canonical concepts
+- canonical concepts
 - validated JSON schema
-- reviewed sample question bank
+- reviewed question samples
 
 ### Phase 2: Learner profile and learning engine
 
@@ -408,34 +468,40 @@ Before 3D presentation is enabled by default, validate:
 - corrective teaching
 - mastery states
 - reinforcement
-- Progress Checks
+- Periodic Progress Checks
+- Spelling Studio rules
 
 ### Phase 3: Local persistence and reporting data
 
-- IndexedDB state
+- IndexedDB learner state
 - structured attempt history
 - active-session recovery
-- export
-- restore
+- Export Progress
+- Import Progress
 - local analytics aggregation
 
-### Phase 4: Core interface reconciliation
+### Phase 4: Frontend integration
 
 - Sinag ng Kaalaman branding
 - Open Design-derived component system
+- Material Symbols Rounded integration
 - dashboard
 - quiz flow
 - feedback states
-- learner progress
-- Parent Progress analytics
-- settings
+- learner Progress
+- Rewards & Milestones
+- Parent Progress
+- Settings
+- Progress Portability & Data Control
 
-### Phase 5: Gamification
+### Phase 5: Gamification and feedback polish
 
 - XP
 - levels
-- badges
+- stable achievement IDs
+- badge artwork mapping
 - celebrations
+- sound effects
 
 ### Phase 6: Accessibility and quality pass
 
@@ -449,19 +515,10 @@ Before 3D presentation is enabled by default, validate:
 
 - 3D proof of concept from approved 2D characters
 - rendering adapter
-- tablet performance validation
+- performance validation
 - 2D fallback validation
 - reduced-motion validation
 - limited integration into greetings and celebrations
-
-### Phase 8: Optional future enhancements
-
-Only after the core learning loop is validated:
-
-- additional languages
-- additional quiz modes
-- richer character interactions
-- other network-dependent features with a demonstrated learning requirement
 
 ## Change discipline
 
@@ -477,9 +534,7 @@ If the feature cannot answer these clearly, defer it.
 
 ## Definition of done
 
-A feature is not complete merely because it renders or runs.
-
-It should be considered complete only when:
+A feature is complete only when:
 
 - intended behavior is implemented
 - relevant validation passes
@@ -487,6 +542,8 @@ It should be considered complete only when:
 - local persistence impact is considered
 - privacy impact is considered
 - source/license obligations are satisfied
+- UI wording follows the current semantic contract
+- icon usage follows the Material Symbols policy or documented brand/badge exception
 - documentation is updated when behavior or architecture changes
 
 Do not document planned work as completed work.
