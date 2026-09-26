@@ -23,9 +23,9 @@ Mistakes are part of the learning loop, not punishments.
 
 ### 2. Understanding is more important than speed
 
-Normal activities are self-paced.
+Normal Practice is self-paced.
 
-Timed modes may exist as optional challenges, but the learner must not be pressured to rush through explanations or feedback.
+Challenge Mode may exist as an optional timed activity, but the learner must not be pressured to rush through explanations or feedback.
 
 ### 3. Accuracy is more important than content volume
 
@@ -49,7 +49,7 @@ Accessibility must be considered in design, implementation, testing, and content
 
 ### 6. Gamification serves learning
 
-XP, levels, badges, streaks, characters, and celebrations exist to support practice and motivation.
+XP, levels, badges, practice consistency, characters, and celebrations exist to support practice and motivation.
 
 They must never override educational quality or create unnecessary pressure.
 
@@ -69,7 +69,7 @@ The MVP may ask for the child's first name or preferred nickname because it dire
 
 A parent or guardian should be able to understand where the child is doing well and where more practice is needed.
 
-Parent Progress analytics must be derived from local educational activity and should show concrete learning evidence such as language-pair performance, category performance, mastery, recurring errors, and Progress Check trends.
+Parent Progress analytics must be derived from local educational activity and should show concrete learning evidence such as language-pair performance, category performance, mastery, recurring errors, spelling performance, and Periodic Progress Check trends.
 
 Do not turn parent reporting into behavioral tracking, advertising analytics, or hidden profiling.
 
@@ -79,7 +79,9 @@ Do not infer intelligence, personality, diagnosis, or capability from quiz resul
 
 Local-first does not mean disposable.
 
-Learner progress, profile identity, settings, and learning history needed for recovery must be exportable, restorable, schema-versioned, and protected from accidental destructive actions.
+Learner progress, profile identity, settings, and learning history needed for recovery must be exportable, importable, schema-versioned, and protected from accidental destructive actions.
+
+Import Progress must validate the backup and require confirmation before replacing current browser progress.
 
 ### 10. Sources must remain traceable
 
@@ -156,23 +158,30 @@ If the answer is unclear, the feature should be deferred until its value can be 
 
 The initial project is intentionally bounded to:
 
-- Grade 4 to Grade 5 learners
+- Grade School Level learner-facing scope, with the original Grade 4 to Grade 5 range retained as historical curriculum context where useful
 - English, Tagalog, and Hiligaynon
 - four initial language pairs
 - first name or preferred nickname only for learner identity
 - local browser persistence
-- contextual quiz activities
+- contextual practice activities
 - corrective teaching
 - deterministic mastery tracking
-- periodic Progress Checks
+- Spelling Studio with syllable-aware Tagalog/Hiligaynon activities where reviewed segmentation is available
+- Periodic Progress Checks
 - local Parent Progress analytics
 - XP, levels, badges, and lightweight celebrations
 - accessibility controls
-- progress export and restore
+- Export Progress and Import Progress
 - school-age study-buddy characters
 - optional 3D study-buddy presentation with a required 2D fallback
 
 Expansion beyond this boundary should happen only after the core learning loop is validated.
+
+## UI semantic contract
+
+Learner-facing wording and normal application icon semantics should follow [`UI_SEMANTICS_AND_MATERIAL_SYMBOLS.md`](UI_SEMANTICS_AND_MATERIAL_SYMBOLS.md).
+
+The interface may evolve visually, but wording changes that alter the learner's mental model should be reviewed deliberately rather than introduced incidentally during implementation.
 
 ## Final rule
 
