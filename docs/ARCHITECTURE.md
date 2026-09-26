@@ -2,9 +2,11 @@
 
 ## Architectural goal
 
-Sinag ng Kaalaman should remain simple, local-first, recoverable, and easy to inspect.
+Sinag ng Kaalaman should remain simple, local-first, recoverable, accessible, and easy to inspect.
 
-The MVP does not require a cloud database, account system, or remote application backend.
+The MVP does not require a cloud database, account system, remote application backend, remote AI dependency, advertising SDK, or third-party behavioral analytics.
+
+For learner-facing wording and icon semantics, [`UI_SEMANTICS_AND_MATERIAL_SYMBOLS.md`](UI_SEMANTICS_AND_MATERIAL_SYMBOLS.md) is the current canonical design handoff.
 
 ## Initial architecture decision
 
@@ -13,7 +15,7 @@ Use a browser-based application with two primary data layers:
 1. **Versioned JSON** for canonical educational content.
 2. **IndexedDB** for learner state and progress.
 
-SQLite is intentionally deferred. It may become useful later if the project is packaged as a desktop or mobile application or if the local content corpus grows beyond what is comfortable to manage as static JSON.
+SQLite remains deferred. It may become useful later if the project is packaged as a desktop/mobile application or if the local corpus grows beyond what is comfortable to manage as static JSON.
 
 ## High-level architecture
 
@@ -23,23 +25,32 @@ SQLite is intentionally deferred. It may become useful later if the project is p
 +--------------------------------------------------+
 | UI / Interaction Layer                           |
 | - Learner onboarding                             |
-| - Dashboard                                      |
-| - Language selection                             |
-| - Quiz views                                     |
-| - Teaching feedback                              |
-| - Learner progress                               |
-| - Parent Progress analytics                      |
-| - Rewards                                        |
-| - Accessibility / settings                       |
+| - Home                                           |
+| - Practice                                       |
+| - Progress                                       |
+| - Rewards & Milestones                           |
+| - Parent Progress                                |
+| - Settings / Accessibility                       |
+| - Progress Portability & Data Control            |
+| - About the Developer / Support Development      |
++--------------------------------------------------+
+| UI Semantic / Presentation Services              |
+| - Material Symbols Rounded adapter               |
+| - Brand-logo adapter                             |
+| - Badge-art resolver                             |
+| - Sound-effect events                            |
+| - Celebration-effect events                      |
+| - Accessibility presentation settings            |
 +--------------------------------------------------+
 | Learning Domain Layer                            |
 | - Session generation                             |
 | - Question selection                             |
 | - Corrective teaching                            |
 | - Reinforcement                                  |
+| - Spelling evaluation                            |
 | - Mastery calculation                            |
-| - Progress checks                                |
-| - XP / levels / badges                           |
+| - Periodic Progress Checks                       |
+| - XP / levels / achievement eligibility          |
 | - Local analytics aggregation                    |
 +--------------------------------------------------+
 | Character Presentation Layer                     |
@@ -50,6 +61,7 @@ SQLite is intentionally deferred. It may become useful later if the project is p
 +--------------------------------------------------+
 | Persistence Layer                                |
 | - IndexedDB learner state                        |
+| - Active-session recovery                        |
 | - Export / import validation                     |
 +--------------------------------------------------+
 | Canonical Content Layer                          |
@@ -69,61 +81,130 @@ The application is definitively:
 - local-first
 - offline-capable where practical
 - responsive
-- tablet-first
+- device-neutral
 
-The frontend framework is **not yet locked**.
+Do not preserve the older `tablet-first` requirement as an architecture constraint. Mobile, tablet, laptop, and desktop layouts should adapt without changing the learning model.
 
-The current Open Design prototype is a useful interaction reference, but it is not yet the canonical production architecture. It currently uses a single HTML file, inline CSS and JavaScript, `localStorage`, a small sample vocabulary, and 2D study-buddy artwork. Production implementation should reconcile this prototype with the architecture defined here.
+The frontend framework is not yet treated as the domain architecture. The current Open Design export is the visual and interaction handoff reference, but its single-file HTML, inline CSS/JavaScript, inline SVG icon registry, and `localStorage` persistence are prototype implementation details.
+
+Production integration should preserve the design semantics while replacing prototype-only implementation choices where required.
 
 ## Proposed repository structure
 
-This is a planning structure, not a statement that implementation files already exist.
+Planning structure:
 
 ```text
-Sinag_Ng_Kaalaman/
+Sinag/
 |
 |-- README.md
+|-- assets/
+|   |-- branding/
+|   |-- badges/
+|   |-- characters/
+|   `-- brand-logos/
+|-- data/
 |-- docs/
 |   |-- PROJECT_IDEATION.md
 |   |-- ARCHITECTURE.md
 |   |-- BUILD_GUIDELINES.md
 |   |-- CURRENT_PROTOTYPE_AUDIT.md
+|   |-- UI_SEMANTICS_AND_MATERIAL_SYMBOLS.md
 |   `-- PRIME_DIRECTIVE.md
-|
-|-- src/                       # future implementation
+|-- src/                       # production implementation
 |   |-- app/
 |   |-- components/
 |   |-- features/
 |   |   |-- onboarding/
-|   |   |-- quiz/
+|   |   |-- practice/
 |   |   |-- progress/
-|   |   |-- parent-analytics/
 |   |   |-- rewards/
-|   |   |-- characters/
-|   |   `-- accessibility/
+|   |   |-- parent-progress/
+|   |   |-- settings/
+|   |   |-- portability/
+|   |   |-- developer-support/
+|   |   `-- characters/
 |   |-- domain/
 |   |   |-- concepts/
 |   |   |-- mastery/
 |   |   |-- sessions/
+|   |   |-- spelling/
 |   |   |-- analytics/
 |   |   `-- achievements/
 |   |-- content/
-|   |   |-- concepts/
-|   |   |-- questions/
-|   |   `-- provenance/
 |   |-- storage/
-|   |   |-- indexeddb/
-|   |   `-- backup/
+|   |-- presentation/
+|   |   |-- icons/
+|   |   |-- audio/
+|   |   |-- celebrations/
+|   |   `-- characters/
 |   `-- assets/
-|       |-- characters-2d/
-|       `-- characters-3d/
-|
-`-- tests/                     # future validation
+`-- tests/
 ```
+
+The exact framework-specific layout may evolve, but domain, persistence, content, and presentation concerns should remain separated.
+
+## UI semantic layer
+
+The application should not bind behavior to a visual glyph.
+
+Example:
+
+```text
+Domain action: export progress
+Visible label: Export Progress Backup
+Icon token: download
+```
+
+The action remains stable if the symbol changes later.
+
+### Material Symbols
+
+Use **Material Symbols Rounded** for normal application controls and state indicators through a shared adapter/component.
+
+The production icon layer should accept semantic icon tokens and render the documented Material Symbol.
+
+Examples:
+
+```text
+home            -> home
+practice        -> menu_book
+progress        -> monitoring
+settings        -> settings
+mixed-practice  -> auto_awesome
+spelling        -> spellcheck
+comprehension   -> lightbulb
+export          -> download
+import          -> upload_file
+reset           -> restart_alt
+```
+
+See [`UI_SEMANTICS_AND_MATERIAL_SYMBOLS.md`](UI_SEMANTICS_AND_MATERIAL_SYMBOLS.md) for the complete mapping.
+
+### Brand logos
+
+GitHub, LinkedIn, Facebook, and Buy Me a Coffee use dedicated brand assets rather than Material Symbols.
+
+### Badge artwork
+
+Achievement identity is based on a stable achievement ID, not the image filename or current display title.
+
+Recommended model:
+
+```json
+{
+  "id": "category-master",
+  "display_name": "Domain Champion",
+  "tagline": "Kampeon sa Kategorya",
+  "category_id": "mastery",
+  "art_asset": "resolved-by-registry"
+}
+```
+
+This allows existing artwork filenames to be reconciled without coupling unlock logic to a temporary label.
 
 ## Learner profile model
 
-The MVP should collect only the minimum identity needed to personalize the application.
+Collect only the minimum identity needed to personalize the app.
 
 Required field:
 
@@ -134,7 +215,7 @@ Required field:
 }
 ```
 
-`first_name` may also contain a preferred nickname.
+`first_name` may contain a preferred nickname.
 
 Do not require:
 
@@ -145,20 +226,20 @@ Do not require:
 - username
 - account registration
 
-The application is already bounded to a Grade 4 to Grade 5 audience, so age collection is unnecessary for the initial product.
+Learner-facing level copy is **Grade School Level**. Historical curriculum alignment may still describe the original Grade 4 to Grade 5 target where relevant.
 
 Profile data should:
 
 - remain local
 - be editable
-- be included in backup export and restore
-- be used only for learner-facing personalization such as greetings and progress summaries
+- be included in Export Progress / Import Progress
+- be used only for learner-facing personalization
 
 ## Canonical content model
 
-The application should model **concepts**, not only translated word pairs.
+Model concepts, not only translated word pairs.
 
-Example conceptual record:
+Example:
 
 ```json
 {
@@ -173,10 +254,12 @@ Example conceptual record:
     },
     "tagalog": {
       "word": "masunurin",
+      "syllables": ["ma", "su", "nu", "rin"],
       "definition": "taong sumusunod sa mga tagubilin o bilin"
     },
     "hiligaynon": {
       "word": null,
+      "syllables": [],
       "definition": null
     }
   },
@@ -190,42 +273,25 @@ Example conceptual record:
 }
 ```
 
-The exact schema may evolve, but the following principles should remain stable:
+Syllable metadata is recommended for reviewed Tagalog and Hiligaynon entries used by Spelling Studio.
 
-- one stable concept identifier
+Stable principles:
+
+- stable concept identifier
 - category metadata
 - language-specific expressions and definitions
+- syllable segmentation where reviewed and useful
 - age/difficulty metadata
 - example sentences
 - source provenance
 - review status
 - schema version
 
-## Content provenance
-
-Every imported or derived content item should be traceable to its source.
-
-Suggested provenance fields:
-
-```json
-{
-  "source_name": "Example Source",
-  "source_url": "https://example.org",
-  "license": "CC0-1.0",
-  "attribution_required": false,
-  "commercial_use_allowed": true,
-  "derivative": false,
-  "reviewed": true
-}
-```
-
-This is especially important when evaluating external datasets with non-commercial or share-alike terms.
-
 ## Learner state model
 
-Learner state belongs in IndexedDB rather than inside canonical content files.
+Learner state belongs in IndexedDB rather than canonical content files.
 
-Suggested data groups:
+Suggested groups:
 
 ```text
 profile
@@ -245,7 +311,7 @@ Canonical content and learner state must remain separate.
 
 ## Attempt event model
 
-Parent analytics require more structured history than a simple total score.
+Parent Progress requires structured history.
 
 A compact local attempt record may contain:
 
@@ -255,102 +321,64 @@ A compact local attempt record may contain:
   "concept_id": "obedient",
   "category": "character_traits",
   "pair": "en-tl",
-  "activity_type": "context_fill",
+  "activity_type": "spelling_missing_syllable",
   "correct": false,
+  "concept_understood": true,
+  "spelling_exact": false,
   "first_attempt": true,
   "reinforcement": false,
   "sequence": 4
 }
 ```
 
-Exact fields may evolve, but the stored data must be sufficient to calculate learning summaries without requiring a remote analytics service.
+Exact fields may evolve, but stored data must support local learning summaries without remote telemetry.
 
-## Parent Progress analytics
+## Spelling domain
 
-Parent analytics are a local educational reporting feature, not external telemetry.
+Spelling Studio should distinguish:
 
-The analytics layer should derive summaries from learner state such as:
+1. correct concept + exact spelling
+2. correct concept + near-miss spelling
+3. incorrect concept
 
-- accuracy by language pair
-- mastery by language pair
-- accuracy and mastery by content category
-- concepts repeatedly answered incorrectly
-- concepts consistently answered correctly
-- first-attempt success rate
-- reinforcement success
-- Progress Check history and trend
-- recent session counts
-- mastery distribution across New, Learning, Familiar, and Mastered
+For Tagalog and Hiligaynon, the engine may use reviewed syllable segmentation for:
 
-The interface should present both:
+- missing-syllable exercises
+- syllable ordering
+- guided full-word spelling
 
-### Strengths
+Input validation and answer evaluation are separate.
 
-Examples:
+Single-word/syllable input should accept Unicode letters only. Multi-word input may allow spaces only when the canonical answer requires them.
 
-- strongest language pair
-- strongest category
-- concepts consistently retained
-- recent improvement
-
-### Needs practice
-
-Examples:
-
-- language pair with the highest unresolved error rate
-- category with the lowest mastery
-- concepts repeatedly missed
-- concepts that regress during later Progress Checks
-
-Analytics should describe observed learning performance. They must not infer personality, intelligence, ability, or other traits from quiz results.
-
-## Mastery model
-
-Use deterministic rules for the MVP.
-
-Each concept may track:
-
-- attempts
-- correct answers
-- incorrect answers
-- recent result history
-- last seen date or local sequence
-- mastery score
-- mastery state
-
-Initial mastery states:
-
-```text
-NEW
-LEARNING
-FAMILIAR
-MASTERED
-```
-
-Thresholds should remain configurable so they can be adjusted after real learner testing.
+Do not silently autocorrect the learner's actual answer.
 
 ## Session engine
 
-The session engine should be able to request a bounded question set based on:
+The session engine requests a bounded question set based on:
 
 - selected language pair
-- activity type
-- number of questions
+- exercise style
+- session mode
+- question count
 - current mastery
 - concepts needing reinforcement
 - older mastered concepts for retention
 
-Initial defaults:
+Preferred learner-facing modes:
 
 - Quick Practice: 5 questions
-- Regular Practice: 10 questions
-- Progress Check: 20 questions
+- Normal Practice: 10 questions
+- Periodic Progress Check: 20 questions
+- Challenge Mode (Optional 90-second timer)
 
-A session generator should not mutate canonical educational content.
+Internal session identifiers may remain stable and need not mirror visible copy.
+
+A session generator must not mutate canonical educational content.
 
 ## Corrective teaching engine
 
-Incorrect answers must produce structured feedback containing:
+Incorrect answers produce structured feedback containing:
 
 - selected answer
 - selected answer meaning
@@ -359,11 +387,11 @@ Incorrect answers must produce structured feedback containing:
 - contextual explanation
 - reinforcement marker
 
-This feedback should come from reviewed content where possible rather than being generated unpredictably at runtime.
+Feedback should come from reviewed content where possible rather than unpredictable runtime generation.
 
-## Progress checks
+## Periodic Progress Checks
 
-Progress checks are distinct from ordinary practice.
+Periodic Progress Checks are distinct from ordinary practice.
 
 They should sample from:
 
@@ -372,25 +400,47 @@ They should sample from:
 - previously difficult concepts
 - older mastered concepts
 
-Progress-check history should be preserved so improvement can be measured over time and shown in Parent Progress analytics.
+History should be preserved so improvement can be shown in Progress and Parent Progress.
 
-## Gamification layer
+## Parent Progress analytics
 
-Gamification consumes learning results but must not determine content correctness.
+Parent Progress is a local educational reporting feature, not external telemetry.
+
+Derive summaries such as:
+
+- overall accuracy
+- accuracy by language pair
+- mastery by language pair
+- accuracy/mastery by category
+- recurring missed concepts
+- consistently strong concepts
+- spelling accuracy and near misses
+- reinforcement success
+- Periodic Progress Check history and trend
+- recent session counts
+- mastery distribution
+
+The interface should show strengths and areas needing practice.
+
+Do not infer personality, intelligence, diagnosis, or capability from quiz results.
+
+## Achievement model
+
+Gamification consumes learning results but does not determine content correctness.
 
 It may calculate:
 
 - XP
-- level
-- streaks
+- learner level
+- practice consistency
 - badge eligibility
 - milestone celebrations
 
-Incorrect answers should not deduct XP.
+Incorrect answers do not deduct XP.
+
+Achievement logic should use stable IDs. Current display copy is defined in the UI semantics document.
 
 ## Character presentation architecture
-
-The recurring school-age study buddies should support both 2D and 3D presentation.
 
 Recommended abstraction:
 
@@ -404,41 +454,31 @@ The learning engine must not know which presenter is active.
 
 ### 2D baseline
 
-The approved 2D study-buddy artwork remains:
+Approved 2D study-buddy artwork remains:
 
-- the visual source of truth for character identity
-- the accessibility and compatibility fallback
+- the visual source of truth
+- the accessibility/compatibility fallback
 - the lowest-cost rendering path
 
 ### 3D enhancement
 
-3D characters may be implemented through Three.js. `img2threejs/img2threejs` may be evaluated as a production aid for reconstructing the approved character reference as procedural Three.js models.
+Three.js may be used later for optional 3D presentation.
 
-3D requirements:
+Requirements:
 
 - lazy loading
-- optimized geometry and textures or procedural equivalents
+- optimized geometry/assets
 - no blocking of quiz content
-- no dependency on a remote service at runtime
+- no remote runtime dependency
 - graceful fallback when WebGL is unavailable
-- graceful fallback on low-performance devices
 - reduced-motion compliance
-- character animation must stop or simplify during reading-intensive states
+- simplified or stopped animation during reading-intensive states
 
-Suggested 3D use cases:
-
-- dashboard greeting
-- correct-answer celebration
-- supportive incorrect-answer reaction
-- badge unlock
-- level-up celebration
-- rewards or character gallery
-
-Avoid continuous animation beside long questions or explanations.
+`img2threejs/img2threejs` may be evaluated as a production aid only.
 
 ## Accessibility layer
 
-Accessibility preferences must be stored independently from content and session data.
+Accessibility settings are independent from content and session data.
 
 Settings should include:
 
@@ -450,16 +490,15 @@ Settings should include:
 - contrast mode
 - reduced motion
 - read-aloud preferences
+- sound-effect preferences
 
-Components should consume these settings consistently through the application rather than implementing one-off overrides.
+Icon-only interactive controls require accessible names. Decorative symbols should be hidden from assistive technology.
 
-The 3D presentation layer must consume the same reduced-motion preference and must never be required to understand the lesson.
+## Progress portability architecture
 
-## Backup and restore architecture
+Exported progress is a versioned JSON package.
 
-Exported progress should be a versioned JSON package.
-
-Suggested top-level format:
+Suggested top-level structure:
 
 ```json
 {
@@ -475,13 +514,21 @@ Suggested top-level format:
 }
 ```
 
-Restore must:
+Primary UI semantics:
 
-1. Parse the file safely.
-2. Validate its schema.
-3. Reject malformed or unsupported versions.
-4. Show a summary including the learner name before replacement.
-5. Require explicit confirmation before overwriting existing local progress.
+- Export Progress
+- Import Progress
+- Reset Progress
+
+Import must:
+
+1. Parse safely.
+2. Validate schema and version.
+3. Reject malformed or unsupported backups.
+4. Show a summary including learner name before replacement.
+5. Require explicit confirmation before overwriting current progress.
+
+The confirmation copy may explain that the imported backup will restore or replace current browser data, while the primary action remains **Import Progress**.
 
 ## Offline-first boundary
 
@@ -490,28 +537,14 @@ The MVP should not require:
 - authentication
 - cloud synchronization
 - remote database
-- remote analytics tracking service
-- advertising SDK
+- remote analytics tracking
+- advertising
 - remote AI inference
 
-Network-dependent features may be evaluated later only if a demonstrated learning requirement justifies them.
-
-## External projects
-
-### HiliSenti
-
-`jjjardev/hilisenti` may be used as a linguistic research/reference source for Hiligaynon usage. The current dataset is CC BY-NC-SA 4.0 and the repository code is MIT licensed.
-
-Any HiliSenti-derived content must remain identifiable and must not be mixed into commercially unrestricted content without a separate licensing review.
-
-### img2threejs
-
-`img2threejs/img2threejs` is currently Apache-2.0 licensed and may be evaluated for procedural Three.js character reconstruction.
-
-It is a possible production tool for the 3D study-buddy layer, but it must not become a dependency of the learning, content, progress, or analytics domains.
+Network-dependent features may be evaluated later only when a demonstrated requirement justifies them.
 
 ## Architecture constraint
 
-No backend, framework, database, AI service, analytics service, or rendering system should be introduced merely because it is available.
+No backend, framework, database, AI service, analytics service, icon library, or rendering system should be introduced merely because it is available.
 
-Every dependency must answer a concrete requirement and must reduce more complexity than it adds.
+Every dependency must answer a concrete requirement and reduce more complexity than it adds.
