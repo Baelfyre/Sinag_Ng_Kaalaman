@@ -6,35 +6,39 @@
 
 The name means a ray or light of knowledge. The product should help children gradually understand unfamiliar words and concepts instead of treating language learning as a simple right-or-wrong quiz.
 
+Current learner-facing identity:
+
+- **Sinag ng Kaalaman**
+- **Filipino-English Language Journey**
+- **Grade School Level**
+
 ## Problem
 
-Some Grade 4 to Grade 5 learners primarily speak or understand English and have difficulty interpreting Filipino or Hiligaynon vocabulary, especially when the words appear inside schoolwork, stories, or contextual sentences.
+Some grade-school learners are more comfortable in English and have difficulty interpreting Filipino or Hiligaynon vocabulary, especially when words appear inside schoolwork, stories, instructions, or contextual sentences.
 
 The project addresses that gap through short, repeatable, context-based learning activities.
 
 ## Target learner
 
-- Grade 4 to Grade 5
-- Approximately ages 9 to 10
-- English-dominant or English-comfortable learner
-- Developing Filipino and/or Hiligaynon vocabulary and comprehension
+- grade-school learner
+- English-dominant or English-comfortable
+- developing Filipino and/or Hiligaynon vocabulary and comprehension
+
+The original ideation focused most strongly on the Grade 4 to Grade 5 range. That remains useful historical curriculum context, but the learner-facing level label is now **Grade School Level**.
 
 The interface should feel like a modern educational game, not a preschool app and not a formal learning-management system.
 
 ## Learner identity
 
-The application should know enough about the learner to personalize the experience without collecting unnecessary personal data.
-
 For the MVP:
 
 - ask only for the child's first name or preferred nickname
-- do not ask for age because the application is already designed for a Grade 4 to Grade 5 audience
-- do not require a full legal name, birth date, email address, account, or login
+- do not require age, birth date, full legal name, email, account, or login
 - store the name locally with learner progress
-- allow the learner or guardian to edit the name later
-- include the name in exported progress backups
+- allow editing later
+- include the name in exported/imported progress data
 
-The name may be used in greetings, encouragement, progress summaries, and restore previews.
+The name may be used in greetings, encouragement, progress summaries, and import previews.
 
 ## Initial language combinations
 
@@ -59,118 +63,170 @@ Example:
 
 The child selects an answer, receives feedback, and continues at their own pace.
 
-## Question and activity types
+## Preferred practice wording
 
-Initial supported activity patterns may include:
+The current Open Design wording is preferred for learner-facing UI.
 
-- Fill in the blank using contextual clues
-- Meaning matching
-- Reverse translation
-- Sentence comprehension
-- Synonym or antonym recognition
-- Context-based vocabulary selection
+### Exercise styles
 
-The MVP does not need all activity types on day one. Content quality is more important than variety.
+- **Mixed Practice (All Types)**
+- **Multiple Choice**
+- **Spelling Studio**
+- **Comprehension**
 
-## Corrective teaching
+### Session modes
 
-An incorrect answer must become a teaching opportunity.
-
-When the learner chooses incorrectly, the application should:
-
-1. Show the selected answer and its meaning.
-2. Identify the correct answer.
-3. Explain what the correct answer means.
-4. Explain why it fits the sentence or context better.
-5. Mark the concept for reinforcement in a later question or session.
-
-The application must avoid punitive wording such as `WRONG`, `FAILED`, or similar high-pressure feedback.
-
-## Session models
-
-### Quick Practice
+#### Quick Practice
 
 - 5 questions
-- Short review or warm-up
+- focused daily review
 
-### Regular Practice
+#### Normal Practice
 
 - 10 questions
-- Default learning session
+- default self-paced learning session
+- replaces the earlier learner-facing label `Regular Practice`
 
-### Progress Check
+#### Periodic Progress Check
 
 - 20 questions
-- Slightly longer periodic assessment
-- Intended to measure retention, not speed
+- milestone assessment
+- combines recognition and active spelling
+- measures retention rather than speed
 
-A proposed initial cadence is a Progress Check after every 4 regular sessions, making every 5th scheduled session a longer review.
+#### Challenge Mode (Optional 90-second timer)
+
+- lighthearted timed round
+- no penalty
+- no letter grades
+
+A proposed cadence is a Periodic Progress Check after every 4 Normal Practice sessions.
 
 ## Session composition
 
-A normal session should mix:
+A Normal Practice session should mix:
 
 - newly introduced concepts
 - concepts currently being learned
 - concepts previously answered incorrectly
 - older mastered concepts for retention
 
-Progress checks should draw from recent, difficult, and previously mastered concepts.
+Periodic Progress Checks should draw from recent, difficult, and previously mastered concepts.
+
+## Corrective teaching
+
+An incorrect answer becomes a teaching opportunity.
+
+The application should:
+
+1. Show the selected answer and its meaning.
+2. Identify the correct answer.
+3. Explain the correct answer meaning.
+4. Explain why it fits the sentence or context better.
+5. Mark the concept for reinforcement.
+
+Avoid punitive wording such as `WRONG`, `FAILED`, or similar high-pressure feedback.
 
 ## Pacing
 
-The default mode is self-paced.
-
-Flow:
+The default flow is self-paced:
 
 `Question -> Answer -> Explanation -> Next`
 
-Optional challenge mode may use a 90-second countdown. The final timer scope must be defined intentionally during implementation because the current prototype uses one 90-second timer across the active challenge session rather than resetting it for each question.
+Challenge Mode is optional. Pause/resume should preserve current session state.
 
-A pause feature should preserve the current session state.
+## Spelling Studio
+
+Spelling is a first-class activity rather than a decorative side mode.
+
+The learning progression may move through:
+
+1. multiple-choice recognition
+2. missing-syllable spelling
+3. syllable ordering
+4. full-word spelling
+5. retention review
+
+For Tagalog and Hiligaynon, syllable-aware presentation is preferred when reviewed segmentation is available.
+
+Example:
+
+`MAG | LA | KAD`
+
+Missing-syllable form:
+
+`MAG | __ | KAD`
+
+Spelling evaluation should distinguish:
+
+- correct concept + exact spelling
+- correct concept + near-miss spelling
+- incorrect concept
+
+Input validation rules:
+
+- Unicode letters only for single-word/syllable inputs
+- case-insensitive comparison
+- trim leading/trailing spaces
+- reject numbers, emoji, and unrelated symbols
+- no silent autocorrection
+- allow internal spaces only for intentionally multi-word canonical answers
 
 ## Learning progression
 
-Concept mastery should remain simple and understandable:
+Initial mastery states:
 
 - New
 - Learning
 - Familiar
 - Mastered
 
-The application may track attempts, correct answers, incorrect answers, recency, and mastery percentage. The first implementation should use deterministic rules rather than machine learning.
+The first implementation should use deterministic rules rather than machine learning.
 
-## Parent Progress analytics
+## Parent Progress
 
-The app should help a parent or guardian understand where the learner is improving and where additional practice is needed.
+Parent Progress is a local educational reporting feature, not a remote analytics service.
 
-This should be a local reporting feature built from the child's stored learning history, not a remote analytics or tracking service.
+It should answer questions such as:
 
-The parent view should answer questions such as:
-
-- Which language pair is the child strongest in?
-- Which language pair needs the most support?
-- Which content categories are strongest?
-- Which categories are still difficult?
+- Which language pair is strongest?
+- Which pair needs more support?
+- Which categories are strongest?
 - Which concepts are repeatedly missed?
-- Which previously difficult concepts are improving?
-- How are Progress Check results changing over time?
-- How much of the current content is New, Learning, Familiar, or Mastered?
+- Which difficult concepts are improving?
+- How are Periodic Progress Check results changing?
+- How much content is New, Learning, Familiar, or Mastered?
+- Which words are understood but frequently misspelled?
 
-Useful initial summaries include:
+Useful summaries include:
 
-- accuracy by language pair
-- mastery by language pair
-- accuracy by category
-- mastery by category
-- concepts needing practice
-- consistently strong concepts
-- first-attempt success rate
+- overall accuracy
+- accuracy/mastery by language pair
+- accuracy/mastery by category
+- spelling accuracy and near misses
 - reinforcement success
-- recent session history
-- Progress Check trend
+- recent sessions
+- Periodic Progress Check trend
 
-Analytics should remain descriptive. The application should not infer intelligence, personality, ability, or other personal traits from quiz performance.
+Analytics remain descriptive. The application should not infer intelligence, personality, diagnosis, or capability from quiz results.
+
+## Progress portability
+
+Because storage is local-first, progress must be recoverable.
+
+Preferred UI wording:
+
+- **Progress Portability & Data Control**
+- **Export Progress**
+- **Import Progress**
+- **Reset Progress**
+
+Buttons may use:
+
+- Export Progress Backup
+- Import Progress Backup
+
+Import validates the backup, previews its summary, and requires confirmation before replacing current progress.
 
 ## Gamification
 
@@ -179,27 +235,41 @@ Gamification supports learning but must not become the product's primary objecti
 Initial mechanics:
 
 - XP
-- Levels
-- Badges
-- Practice streaks
-- Achievement milestones
-- Progress bars
-- Character celebrations
+- levels
+- badges
+- practice consistency
+- progress bars
+- achievement milestones
+- study-buddy reactions
+- celebration effects
+
+Open Design progress/reward wording includes:
+
+- Total Sunshine Points
+- Rewards & Milestones
+- Badges Earned
+- In Progress
+- Learner Rank
+
+Badge status terms:
+
+- Earned
+- In Progress
+- Locked
 
 Mistakes should not remove XP.
 
-Rewards should represent real learning actions such as completing practice, mastering difficult concepts, or maintaining consistency.
+Achievement behavior should use stable IDs while display names remain presentation data. The current Open Design achievement names and taglines are recorded in [`UI_SEMANTICS_AND_MATERIAL_SYMBOLS.md`](UI_SEMANTICS_AND_MATERIAL_SYMBOLS.md).
 
 ## Character direction
 
-Use recurring school-age child characters as learning companions.
+Use recurring school-age child characters as study buddies.
 
 Characters should:
 
-- appear approximately the same age as the learner
-- feel like classmates or study buddies rather than teachers
+- feel like classmates or companions rather than authority figures
 - be expressive but not preschool-like
-- support the lesson without competing with the content
+- support the lesson without competing with content
 
 Typical usage:
 
@@ -207,67 +277,71 @@ Typical usage:
 - quiz companion
 - correct-answer reaction
 - supportive incorrect-answer explanation
-- progress and level-up celebration
+- milestone celebration
 
 ## 3D character direction
 
-The study-buddy characters should eventually have 3D versions while preserving the current approved 2D illustrations as the visual reference and fallback.
-
-The 3D layer should be treated as a presentation enhancement, not part of the learning engine.
-
-Possible uses:
-
-- dashboard greetings
-- short correct-answer reactions
-- supportive incorrect-answer reactions
-- badge unlocks
-- level-up celebrations
-- rewards or character gallery
+Future 3D study buddies remain a presentation enhancement.
 
 Requirements:
 
-- 2D fallback must remain available
-- 3D must not block lesson content
-- 3D assets should load lazily
-- reduced-motion preferences must be respected
-- motion should reduce or stop during reading-heavy states
-- WebGL failure or poor device performance must not prevent learning
+- retain 2D fallback
+- do not block lessons
+- lazy-load assets
+- respect reduced motion
+- reduce/stop motion during reading-heavy states
+- WebGL failure must not prevent learning
 
-`img2threejs/img2threejs` may be evaluated as a production aid for reconstructing approved character references into procedural Three.js models.
+`img2threejs/img2threejs` may be evaluated as a production aid, not as a learning-engine dependency.
 
-## Visual direction
+## Visual and icon direction
 
-The design reference is a colorful Grade 4 to Grade 5 quiz-bee atmosphere, but the final interface should be substantially cleaner.
+The visual language should be:
+
+- bright but controlled
+- friendly
+- modern
+- readable
+- child-appropriate without appearing preschool-oriented
 
 Use:
 
-- bright but controlled colors
-- large rounded answer cards
+- large rounded controls
 - strong hierarchy
 - clear progress indicators
 - large touch targets
-- moderate celebratory animation
+- moderate celebration effects
 
 Avoid:
 
-- permanent visual clutter
 - constant confetti
-- multiple competing characters on every screen
 - permanent timers
+- visual clutter
 - team-versus-team pressure
 - preschool visual language
 
+For normal application icons, production should use **Material Symbols Rounded** through a shared icon layer.
+
+External platform identity uses dedicated logos for:
+
+- GitHub
+- LinkedIn
+- Facebook
+- Buy Me a Coffee
+
+Individual achievements should use approved badge artwork when available.
+
 ## Accessibility
 
-Accessibility is part of the product, not a later enhancement.
+Accessibility is part of the product.
 
-Initial accessibility controls:
+Initial controls include:
 
 - child-friendly font profile
 - standard font profile
 - hyperlegible profile
 - dyslexia-friendly profile
-- optional script or handwriting profile
+- optional script/handwriting profile
 - text size
 - line spacing
 - letter spacing
@@ -277,37 +351,13 @@ Initial accessibility controls:
 - read question aloud
 - read answer choices aloud
 
-Script or handwriting fonts should be optional and must never be the default quiz font.
+Script or handwriting fonts are optional and must never be the default quiz font.
 
-3D character animation must obey the same reduced-motion preference and must never contain information required to answer a question.
-
-## Progress and recovery
-
-The learner's state should include:
-
-- first name or nickname
-- XP
-- level
-- sessions completed
-- questions answered
-- concept mastery
-- category performance
-- language-pair performance
-- badges
-- progress-check history
-- accessibility preferences
-- structured attempt history sufficient for local Parent Progress analytics
-
-Because storage is local-first, the application must support:
-
-- Export Progress
-- Restore Progress
-
-The exported file must be schema-versioned and validated before restoration.
+No state should rely on color alone.
 
 ## Initial content strategy
 
-Start with approximately 100 canonical concepts across a limited number of child-relevant categories such as:
+Start with approximately 100 canonical concepts across child-relevant categories such as:
 
 - family
 - school
@@ -320,66 +370,50 @@ Start with approximately 100 canonical concepts across a limited number of child
 - emotions
 - character traits
 
-Each concept should be language-neutral at its core and then map to English, Tagalog, and Hiligaynon expressions, definitions, and examples.
+Each concept should be language-neutral at its core and map to English, Tagalog, and Hiligaynon expressions, definitions, examples, and reviewed syllable segmentation where useful.
 
-This avoids treating translation as a simplistic one-to-one word replacement.
+## Current Open Design handoff
 
-## Content sources and references
-
-Potential sources include:
-
-- open educational materials
-- public-domain dictionaries and books
-- appropriately licensed language resources
-- curriculum-aligned references
-- curated language corpora
-
-`jjjardev/hilisenti` may be useful as a Hiligaynon linguistic and contextual reference. Its current dataset license is CC BY-NC-SA 4.0, so HiliSenti-derived material must remain provenance-aware and must not silently enter unrestricted or commercial content paths.
-
-`img2threejs/img2threejs` may be evaluated for procedural 3D character production. Its role should remain isolated from the learning and content domains.
-
-## Current prototype status
-
-The supplied Open Design prototype already demonstrates:
-
-- the four language pairs
-- self-paced and challenge interaction modes
-- corrective teaching
-- reinforcement
-- XP, levels, and badges
-- learner progress UI
-- accessibility controls
-- browser read-aloud support
-- child study-buddy illustrations
-
-It does not yet implement the full canonical scope, including:
+The current Open Design export now demonstrates substantially more of the intended product surface, including:
 
 - Sinag ng Kaalaman branding
-- first-name onboarding
-- 5 / 10 / 20 session lengths
-- scheduled Progress Checks
-- parent analytics
-- backup export and restore
-- pause and active-session recovery
-- IndexedDB persistence
-- 3D study-buddy presentation
+- Filipino-English Language Journey wording
+- Grade School Level wording
+- first-name/nickname onboarding
+- Home / Practice / Progress / Rewards navigation
+- four language pairs
+- Mixed Practice, Multiple Choice, Spelling Studio, and Comprehension filters
+- Quick Practice, Normal Practice, Periodic Progress Check, and Challenge Mode
+- corrective teaching and reinforcement
+- pause/resume interactions
+- XP, levels, 25 achievement definitions, reward categories, and reward status filtering
+- learner Progress
+- Parent Progress analytics
+- accessibility controls
+- read-aloud support
+- Progress Portability & Data Control
+- About the Developer
+- Support Development
+- recurring 2D study buddies
 
-See `CURRENT_PROTOTYPE_AUDIT.md` for the reconciled prototype review.
+The handoff remains a prototype implementation. Production work still needs to separate domains/components, replace inline SVG icons with the Material Symbols layer, move structured progress to the production local persistence model, reconcile badge artwork by stable ID, and connect reviewed canonical content.
 
 ## MVP success condition
 
-The MVP is successful if a child can:
+The MVP is successful if a learner can:
 
-1. Open the app without creating an account.
-2. Enter a first name or preferred nickname.
-3. Select one of the four initial language pairs.
-4. Complete a self-paced practice session.
-5. Receive useful explanations after mistakes.
-6. Accumulate progress and mastery locally.
-7. Complete periodic progress checks.
-8. Adjust reading and accessibility preferences.
-9. Export and restore progress.
-10. Have a parent or guardian review local strengths and learning gaps.
-11. Continue learning even when 3D presentation is unavailable.
+1. Open the app without an account.
+2. Enter a first name or nickname.
+3. Select one of the four language pairs.
+4. Complete Normal Practice or Quick Practice.
+5. Use Spelling Studio and comprehension activities.
+6. Receive useful corrective explanations.
+7. Build local mastery progress.
+8. Complete Periodic Progress Checks.
+9. Adjust accessibility preferences.
+10. Export and import progress safely.
+11. Earn meaningful badges and milestones.
+12. Have a parent or guardian review local strengths and learning gaps.
+13. Continue learning without sound, animation, sharing, or future 3D features.
 
-Everything beyond that is secondary until the learning loop is validated.
+Everything beyond that remains secondary until the core learning loop is validated.
