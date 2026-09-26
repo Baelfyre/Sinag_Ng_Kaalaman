@@ -539,3 +539,23 @@ The MVP is successful if a learner can:
 13. Continue learning without sound, animation, social sharing, or future 3D features.
 
 Everything beyond that remains secondary until the core learning loop is validated.
+
+## License
+
+Sinag ng Kaalaman is **source-available for noncommercial use**. Because commercial use is restricted, the project should not be described as OSI-approved open source.
+
+Licensing is split by material type:
+
+- **Software code:** PolyForm Noncommercial License 1.0.0
+- **Original educational content, documentation, and project artwork:** CC BY-NC-SA 4.0
+- **Third-party software, datasets, corpora, references, icons, fonts, and other external works:** their original licenses and terms
+
+See:
+
+- [`LICENSE`](LICENSE)
+- [`LICENSES/SOFTWARE.md`](LICENSES/SOFTWARE.md)
+- [`LICENSES/CONTENT.md`](LICENSES/CONTENT.md)
+- [`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md)
+- [`data/source_registry.json`](data/source_registry.json)
+
+The HiliSenti v1 dataset remains a noncommercial third-party reference under CC BY-NC-SA 4.0; its repository code is MIT licensed. Separate commercial permission for original Sinag material cannot override third-party restrictions.
