@@ -22,6 +22,8 @@ Initial language combinations:
 
 Hiligaynon is treated as a language in its own right, not as a dialect label.
 
+The current educational validation scope is **language learning only**. Mathematics and Science may be considered in future development, but they are not part of the current MVP, canonical content corpus, or validation requirements.
+
 ## Core learning loop
 
 1. Choose a language pair and activity.
@@ -328,9 +330,9 @@ The logo visual language uses:
 
 - sun / rays for knowledge and discovery
 - open book for education
-- sprout for growth
-- blue for clarity and learning
-- yellow / orange for warmth and illumination
+- sprout for growth and developing understanding
+- blue for learning and clarity
+- yellow / orange for light, energy, and encouragement
 - green for growth and progress
 
 Do not place the logo inside a white rectangular background.
@@ -477,20 +479,63 @@ Initial content target:
 - approximately 100 canonical concepts
 - child-relevant categories such as family, school, home, food, animals, colors, numbers, actions, emotions, and character traits
 
+The target is a coverage goal, not a requirement to force exactly 100 words. Concepts should be selected for useful curriculum, language, and category coverage.
+
 Each canonical concept should map language-neutral meaning to English, Tagalog, and Hiligaynon representations rather than assuming simplistic one-to-one translation.
 
-## Content source boundaries
+### Language content validation gates
 
-Sources under evaluation include:
+Before language content is considered canonical, review should address, as applicable:
 
-- DepEd learning materials for curriculum and age-alignment reference
-- Princeton WordNet for English lexical structure
-- Tatoeba for multilingual sentence-pattern research
-- `jjjardev/hilisenti` for Hiligaynon contextual research
-- `jhellingman/phildict` for historical Philippine-language dictionary material
-- selected Project Gutenberg historical references
+1. whether Filipino / Tagalog translations are natural, contextually appropriate, and correct
+2. whether Hiligaynon translations are natural, contextually appropriate, and correct
+3. whether stored syllable boundaries are linguistically defensible for spelling activities
+4. whether distractors are plausible but clearly incorrect and suitable for grade-school learners
+5. whether the concept set provides sufficient category and curriculum coverage
+6. whether definitions, examples, explanations, and sentences are suitable for grade-school learners
 
-External sources remain references or optional inputs until licensing, provenance, language correctness, and age suitability are reviewed.
+A single source should not be treated as sufficient evidence for every dimension. When practical, canonicalization should use multiple independent references appropriate to the specific question being reviewed.
+
+## Language validation and reference sources
+
+Sinag uses a source hierarchy. DepEd curriculum and learning-resource standards guide grade alignment and educational suitability; institutional linguistic references support lexical, orthographic, grammatical, and syllabification review; curriculum-aligned video resources help calibrate learner-facing language and presentation; corpora and historical materials provide supplementary evidence.
+
+### DepEd curriculum, orthography, and learning-resource references
+
+- **DepEd MATATAG Curriculum Phase 1** - official curriculum index, including Filipino Baitang 4 and English Grade 4: https://www.deped.gov.ph/matatagcurriculumk147/
+- **MATATAG Filipino Curriculum Guide, Grades 4 and 7** - curriculum competencies and grade-level framing: https://www.deped.gov.ph/wp-content/uploads/MATATAG-FILIPINO-CG-Grades-4-at-7-.pdf
+- **DepEd Order No. 34, s. 2013 - Ortograpiyang Pambansa** - Filipino orthography reference adopted for schools: https://www.deped.gov.ph/2013/08/14/do-34-s-2013-ortograpiyang-pambansa/
+- **DepEd Order No. 76, s. 2011 - Learning Resources Management and Development System (LRMDS)** - learning-resource quality assurance, educational quality, technical quality, intellectual-property, accessibility, and metadata reference: https://www.deped.gov.ph/2011/10/04/do-76-s-2011-national-adoption-and-implementation-of-the-learning-resources-management-and-development-system-lrmds/
+- **LRMDS Assessment, Evaluation, Development, and Production Guidelines** - evaluation and development processes, including translation and mother-tongue resource development: https://lrmds.deped.gov.ph/guidelines
+- **Panugod sa Pagbasa (Hiligaynon Primer), Learning Material** - DepEd Hiligaynon phonological skills, syllable blending, spelling, and word recognition reference: https://lrmds.deped.gov.ph/detail/17611
+- **Panugod sa Pagbasa (Hiligaynon Primer), Teacher's Guide** - companion teaching reference: https://lrmds.deped.gov.ph/detail/17613
+
+### Filipino / Tagalog linguistic references
+
+- **UP Diksiyonaryong Filipino** - spelling, pronunciation, usage, variants, meaning, and Philippine-language lexical cross-reference: https://pages.upd.edu.ph/sentrofilipino/UPdiksiyonaryongFilipino
+- **Ortograpiyang Pambansa** through DepEd Order No. 34, s. 2013 - primary project reference for Filipino orthography and syllabification rules where applicable.
+
+### Hiligaynon linguistic references
+
+- **UP Diksiyonaryong Hiligaynon-Filipino** - approximately 10,000 Hiligaynon-Filipino entries for lexical cross-checking: https://pages.upd.edu.ph/sentrofilipino/publications/diksiyonaryong-hiligaynon-filipino
+- **Hiligaynon Reference Grammar, University of Hawai‘i Press** - phonology, morphophonemics, word structure, phrase structure, and clause structure: https://manifold.uhpress.hawaii.edu/projects/hiligaynon-reference-grammar
+- **HiliSenti v1** - supplementary modern Hiligaynon and code-switching usage research only; dataset license is CC BY-NC-SA 4.0 and it is not automatically canonical content: https://huggingface.co/datasets/jjjardev/hilisenti-v1
+
+### Grade-level presentation and video references
+
+- **Knowledge Channel Learning Resources** - curriculum-based multimedia resources aligned with DepEd materials and developed with subject-matter specialists: https://www.knowledgechannel.org/learning-resources
+- **DepEd Philippines YouTube channel** - official DepEd video material that may be used to compare grade-level wording, lesson framing, examples, and presentation style: https://www.youtube.com/@DepEd_PH
+
+Video resources are supplementary calibration evidence. They should not be the sole authority for spelling, translation, grammar, or canonical lexical decisions.
+
+### Supporting corpus and historical references
+
+- **Princeton WordNet** - English lexical senses and semantic relationships: https://wordnet.princeton.edu/
+- **Tatoeba** - multilingual sentence-pattern and translation research: https://tatoeba.org/en/downloads
+- **jhellingman/phildict** - historical Philippine-language dictionary collection; license review is required before any material is imported: https://github.com/jhellingman/phildict
+- **Project Gutenberg historical Philippine-language works** - historical lexical cross-checking only, subject to work-specific and jurisdictional review: https://www.gutenberg.org/
+
+Reference inclusion does not grant permission to copy or redistribute source material. License, provenance, attribution, commercial-use restrictions, and source-specific conditions must be reviewed before any external material is imported or adapted. See [`data/source_registry.json`](data/source_registry.json) and [`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md).
 
 ## Current development phase
 
@@ -504,8 +549,9 @@ Current direction:
 4. wire the design to the production learning engine
 5. move structured learner state from prototype storage to the production local persistence layer
 6. connect local analytics, audio events, celebration events, rewards, and progress portability
-7. synchronize implementation with the repository
-8. defer 3D study-buddy reconstruction to the next development phase
+7. validate the initial language corpus against the documented linguistic, grade-level, provenance, and licensing sources
+8. synchronize implementation with the repository
+9. defer 3D study-buddy reconstruction to the next development phase
 
 The current 2D experience remains the production fallback even after future 3D experimentation.
 
