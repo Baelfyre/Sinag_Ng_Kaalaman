@@ -30,4 +30,8 @@ Do not redesign, recolor, crop, or create derivative brand marks as canonical as
 
 The committed WebP is an optimized repository copy intended for web and documentation use. The original generated image remains the source-quality reference outside this repository snapshot.
 
-No standalone third-party asset license is attached to this project-specific generated artwork. Any future repository-wide licensing decision should explicitly address project branding assets.
+### License
+
+Unless a specific asset states otherwise, original project-specific branding artwork in this directory is licensed under **CC BY-NC-SA 4.0** as defined in [`../../LICENSES/CONTENT.md`](../../LICENSES/CONTENT.md).
+
+Commercial reuse is not permitted under the default content license. Third-party marks or externally sourced assets, if added later, retain their own licenses and must be documented separately.
