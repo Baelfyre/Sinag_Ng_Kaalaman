@@ -19,6 +19,20 @@ data/
 
 The folders above describe the intended pipeline. They do not imply that source data has already been imported.
 
+## Licensing boundary
+
+Original Sinag ng Kaalaman educational content is licensed under **CC BY-NC-SA 4.0** unless a specific file states otherwise. See [`../LICENSES/CONTENT.md`](../LICENSES/CONTENT.md).
+
+Third-party source material is **not** relicensed by Sinag ng Kaalaman. External records, corpora, dictionaries, datasets, and reference material remain subject to their original licenses or conditions of use.
+
+In particular, HiliSenti v1 is currently recorded as a `NONCOMMERCIAL_REFERENCE`: its dataset is CC BY-NC-SA 4.0, its repository code is MIT, and no canonical import is currently authorized by the source registry.
+
+See:
+
+- [`source_registry.json`](source_registry.json)
+- [`../THIRD_PARTY_NOTICES.md`](../THIRD_PARTY_NOTICES.md)
+- [`../LICENSE`](../LICENSE)
+
 ## Intake stages
 
 1. **Discover**
@@ -44,7 +58,7 @@ The folders above describe the intended pipeline. They do not imply that source 
    - reject forced one-to-one translations
 
 6. **Age review**
-   - verify Grade 4 to Grade 5 suitability
+   - verify grade-school suitability
    - simplify definitions without changing meaning
 
 7. **Exercise review**
