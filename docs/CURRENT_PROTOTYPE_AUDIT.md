@@ -2,223 +2,296 @@
 
 ## Source reviewed
 
-This audit reflects the Open Design prototype supplied on 2026-09-26 as `SRC.zip`.
+This audit reflects the current Open Design handoff supplied on 2026-09-26 as `Sinag_Design.zip`.
 
-The prototype contains:
+Primary exported files include:
 
 - `index.html`
-- `index.html.artifact.json`
+- `sinag-ng-kaalaman.html`
+- corresponding Open Design artifact metadata
+- `assets/logo.png`
 - `assets/study-buddies.png`
-- Open Design frame metadata and support files
+- Open Design frame/support metadata
 
-This document records the observed state of that prototype. It does not treat planned features as implemented.
+The two final HTML exports were reviewed as equivalent handoff surfaces. Production should choose one source of truth rather than carrying duplicate generated entry files.
+
+This document records the observed prototype state. It does not treat prototype implementation choices as production architecture.
 
 ## Current prototype strengths
 
-The prototype already demonstrates several important project directions:
+The current handoff demonstrates substantially more of the intended product than the earlier prototype audit.
 
-- four language pairs are defined:
+Observed product semantics include:
+
+- Sinag ng Kaalaman branding
+- Filipino-English Language Journey wording
+- Grade School Level wording in learner-facing footer copy
+- learner onboarding with first name or nickname
+- Home, Practice, Progress, Rewards, Parent Progress, and Settings navigation
+- four language pairs:
   - English -> Tagalog
   - English -> Hiligaynon
   - Tagalog -> Hiligaynon
   - Hiligaynon -> English
-- a local-first browser implementation
-- self-paced practice
-- an optional 90-second challenge mode
-- corrective teaching after incorrect answers
-- immediate reinforcement of missed words
-- XP and level progression
-- badges
-- a progress view
+- exercise filters:
+  - Mixed Practice (All Types)
+  - Multiple Choice
+  - Spelling Studio
+  - Comprehension
+- session modes:
+  - Quick Practice
+  - Normal Practice
+  - Periodic Progress Check
+  - Challenge Mode (Optional 90-second timer)
+- corrective teaching
+- reinforcement/review flow
+- pause/resume controls
+- XP and levels
+- Rewards & Milestones
+- 25 achievement definitions
+- reward category and status filtering
+- learner Progress
+- Parent Progress analytics
 - accessibility controls
-- adjustable typography and spacing
-- high-contrast and reduced-motion preferences
-- browser read-aloud support through Speech Synthesis where available
-- recurring child study-buddy artwork
-- responsive, touch-friendly quiz controls
+- browser read-aloud support where available
+- progress export/import/reset interactions
+- About the Developer
+- Support Development
+- recurring 2D study-buddy art
+- responsive interaction design
 
-The prototype is therefore a useful visual and interaction baseline rather than a blank design exercise.
+The current Open Design export is therefore the primary visual and interaction handoff reference for production integration.
+
+## Preferred UI wording
+
+The wording implemented in Open Design is preferred for learner-facing production copy.
+
+Important examples:
+
+- `Normal Practice` instead of the earlier `Regular Practice`
+- `Periodic Progress Check` as the full milestone-assessment label
+- `Spelling Studio` as the spelling activity umbrella
+- `Rewards & Milestones`
+- `Total Sunshine Points`
+- `Learner Rank`
+- `Parent Progress`
+- `Progress Portability & Data Control`
+- `Export Progress` / `Import Progress` / `Reset Progress`
+
+See [`UI_SEMANTICS_AND_MATERIAL_SYMBOLS.md`](UI_SEMANTICS_AND_MATERIAL_SYMBOLS.md) for the canonical wording and icon map.
 
 ## Current implementation observations
 
-### Working product name
+### Prototype delivery shape
 
-The prototype currently identifies itself as **Word Quest** in the page title, header, and browser storage keys.
+The application remains a generated single-file browser prototype with inline CSS and JavaScript.
 
-The canonical project name is **Sinag ng Kaalaman**.
+This is suitable as a visual/interaction handoff but should not dictate production component boundaries.
 
-Required reconciliation:
+Production should extract:
 
-- update visible product naming
-- rename storage namespaces during production implementation
-- provide a migration path if prototype data needs to be retained
+- reusable UI components
+- domain services
+- persistence services
+- icon presentation
+- audio/celebration services
+- reward registry
+- content data
+
+without changing the approved learner-facing flow unnecessarily.
+
+### Icon implementation
+
+The current prototype defines an inline `ICONS` object containing hand-authored SVG path fragments and renders them through a shared `icon()` helper.
+
+This is a good semantic prototype pattern but not the intended production icon source.
+
+Production direction:
+
+- replace normal inline SVG glyphs with **Material Symbols Rounded**
+- retain semantic icon tokens in a centralized component/helper
+- use dedicated brand assets for GitHub, LinkedIn, Facebook, and Buy Me a Coffee
+- use approved badge artwork for individual achievements
+
+The icon replacement must not change action labels or behavior.
 
 ### Content state
 
-The prototype currently contains three sample concepts:
+The prototype contains a larger demonstration vocabulary than the earliest three-word version and organizes examples into categories such as:
 
-- water / tubig / tubig
-- house / bahay / balay
-- dog / aso / ido
+- Nature & Environment
+- Home & Family
+- Animals & Creatures
+- Actions & Daily Life
+- Food & Health
 
-This is demonstration content only and does not yet implement the planned canonical concept schema, category model, age-level review states, or full source-provenance model.
+This is still demonstration/prototype content unless it has separately passed canonical content review.
+
+Production content must remain provenance-aware and should not be promoted to verified merely because it appears in the design handoff.
 
 ### Session model
 
-The prototype currently exposes:
-
-- Self-paced practice
-- 90-second challenge
-
-The current sample session uses the complete three-word sample list.
-
-It does not yet implement the planned activity defaults:
+The prototype now visibly implements the intended 5 / 10 / 20 structure:
 
 - Quick Practice: 5 questions
-- Regular Practice: 10 questions
-- Progress Check: 20 questions
+- Normal Practice: 10 questions
+- Periodic Progress Check: 20 questions
 
-It also does not yet implement the scheduled Progress Check cadence.
+It also presents Challenge Mode with an optional 90-second timer.
 
-### Timer behavior
-
-The current 90-second challenge timer runs across the active session rather than resetting to 90 seconds for every question.
-
-The canonical timing behavior should be intentionally selected during implementation rather than assumed from the prototype.
-
-Default learning must remain self-paced.
+Default learning remains self-paced.
 
 ### Corrective teaching
 
-The current prototype already provides a useful corrective flow:
+The prototype preserves the intended corrective flow:
 
-- shows the learner's answer
-- shows the correct answer
-- displays the meaning
-- explains why the correct answer fits
-- offers immediate retry or continuation
-- adds missed concepts to a later review queue
+- learner answer is acknowledged
+- correct answer is revealed
+- meaning/context is explained
+- retry/review paths are available
+- difficult concepts can return for reinforcement
 
-This aligns strongly with the project's Prime Directive and should be preserved.
+This aligns with the Prime Directive and should be preserved.
+
+### Spelling Studio
+
+The prototype implements full and partial spelling behaviors and distinguishes exact success from retry/near-miss flows.
+
+However, the current partial spelling code still focuses on a missing **letter** rather than the newer preferred missing-**syllable** presentation for Tagalog and Hiligaynon.
+
+Production reconciliation required:
+
+- add reviewed syllable segmentation to canonical language data where useful
+- present Tagalog/Hiligaynon spelling by syllable when practical
+- support missing-syllable and syllable-ordering activities
+- enforce Unicode-aware letters-only input validation
+- keep validation separate from answer correctness
+- do not silently autocorrect misspellings
 
 ### Persistence
 
-The prototype currently uses browser `localStorage` for progress and settings.
+The Open Design prototype uses browser `localStorage` for progress/settings and includes export/import/reset interactions.
 
-The planned production architecture uses IndexedDB for structured learner state, while canonical educational content remains versioned JSON.
+Production architecture still targets IndexedDB for structured learner state.
 
-`localStorage` is acceptable for prototype validation, but it should not be treated as the final persistence decision.
+Required migration boundary:
 
-### Progress data
+- canonical content remains versioned JSON
+- learner state moves to IndexedDB
+- active sessions are recoverable
+- exported backups remain versioned JSON
+- import validates before replacement
 
-The prototype currently tracks a limited set of learner metrics:
+### Progress portability wording
 
-- XP
-- sessions completed
-- words answered correctly
-- badges
-- needs-practice words
-- recent session history
+The prototype primarily uses:
 
-It does not yet record enough structured data for the planned Parent Progress analytics.
+- Export Progress
+- Import Progress
+- Reset Progress
 
-Production progress events should support aggregation by:
+Some confirmation/error copy still uses the word `restore` descriptively.
 
-- language pair
-- concept
-- content category
-- question or activity type
-- correct and incorrect attempts
-- first-attempt success
+Production rule:
+
+- keep **Import Progress** as the primary action/feature label
+- `restore` may appear in explanatory confirmation text describing what imported data will do
+
+### Parent Progress
+
+The prototype now includes a dedicated Parent Progress surface and local summary structures.
+
+Production should retain the parent-facing concept while deriving analytics from structured learner events rather than a remote analytics service.
+
+Required analytics include:
+
+- overall accuracy
+- language-pair performance
+- category performance
+- spelling performance
+- recurring missed concepts
+- strengths
 - reinforcement outcomes
-- mastery state
-- Progress Check result
-- session date or sequence
-
-No remote analytics service is required. These summaries should be calculated locally.
-
-### Learner profile
-
-The prototype currently has no learner onboarding or profile name.
-
-Required addition:
-
-- ask for first name or preferred nickname on first use
-- do not request age, birth date, full legal name, email, or account registration
-- store the name locally
-- allow the name to be edited
-- include it in backup export and restore
-
-### Parent Progress analytics
-
-The prototype progress screen is learner-oriented and does not yet provide the planned parent summary.
-
-The parent view should show at minimum:
-
-- strongest language pair
-- language pair needing the most support
-- strengths by content category
-- categories needing practice
-- individual concepts repeatedly missed
+- Periodic Progress Check history/trend
 - mastery distribution
-- recent practice frequency
-- Progress Check trend over time
 
-Analytics must be descriptive and transparent. They should not use hidden behavioral profiling, advertising telemetry, or external tracking.
+No intelligence, personality, diagnosis, or capability inference should be introduced.
 
-### Progress export and restore
+### Rewards & Milestones
 
-The prototype does not currently implement backup export or restore.
+The current Open Design registry defines 25 stable achievement IDs across six categories:
 
-This remains required because progress is local-first.
+- Getting Started
+- Practice & Consistency
+- Language Exploration
+- Vocabulary & Mastery
+- Spelling & Recall
+- Progress & Milestones
 
-### Pause and active-session recovery
+Reward status wording is:
 
-The prototype does not currently expose the planned Pause Session control.
+- Earned
+- In Progress
+- Locked
 
-Production implementation should preserve an unfinished session so the child can pause or safely leave and resume later.
+The implemented display names and taglines are preferred and are now documented in [`UI_SEMANTICS_AND_MATERIAL_SYMBOLS.md`](UI_SEMANTICS_AND_MATERIAL_SYMBOLS.md).
 
-### Character assets
+Existing repository badge-image filenames include earlier working titles. Production must map badge artwork by **stable achievement ID** rather than treating an asset filename as the canonical display name.
 
-The current visual asset is:
+This avoids needing to rewrite domain logic when titles or filenames are reconciled.
 
-`assets/study-buddies.png`
+### Branding
 
-It is a 2D PNG illustration containing the recurring child learning companions.
+The repository branding asset remains the canonical project logo.
 
-The source illustration should be retained as the canonical visual reference while 3D versions are developed.
+The production logo treatment should preserve:
 
-## 3D character direction
+- transparent background
+- thin white outline around the main artwork
+- no white rectangular backing
+- correct proportions
 
-The project now intends to 3Dify the recurring child study-buddy characters.
+The Open Design `assets/logo.png` is a design-handoff resource, not an instruction to replace the repository's canonical transparent WebP format.
 
-The recommended boundary is:
+### Learner level wording
 
-1. preserve the approved 2D art as the design reference
-2. create simplified, web-optimized 3D equivalents
-3. use a rendering adapter so 2D and 3D presentation are interchangeable
-4. lazy-load 3D code and assets
-5. fall back to 2D when WebGL is unavailable, performance is poor, or reduced motion is enabled
-6. use character movement primarily for greetings, encouragement, feedback, and celebrations
-7. avoid continuous movement while the learner is reading a question or explanation
+The current learner-facing label is **Grade School Level**.
 
-`img2threejs/img2threejs` may be evaluated as a production aid because it reconstructs reference images into procedural Three.js models. It must remain an optional tool, not a hard dependency of the learning engine.
+Some prototype comments or accessibility alt text still reference `Grade 4-5` or `Grade 4 to 5` from the original target definition.
 
-## Recommended next bounded work
+Production cleanup should:
 
-The current prototype is sufficient to stop broad visual ideation and proceed with reconciliation.
+- use Grade School Level for learner-facing copy
+- update stale UI alt text where it unnecessarily exposes the older wording
+- retain the original Grade 4 to Grade 5 target only where curriculum/history context is intentionally documented
 
-Next work should focus on:
+### Study-buddy assets
 
-1. canonical branding as Sinag ng Kaalaman
-2. first-name or nickname onboarding
-3. canonical content schema and first reviewed content set
-4. 5 / 10 / 20 question activity model
-5. structured local progress events that can support Parent Progress analytics
-6. scheduled Progress Checks
-7. pause and active-session recovery
-8. backup export and restore
-9. production persistence decision and migration from prototype `localStorage`
-10. 3D study-buddy proof of concept with a mandatory 2D fallback
+The current design uses `assets/study-buddies.png` as the recurring 2D character art.
 
-The prototype should remain a reference until these gaps are reconciled. Planned features should not be described as already implemented.
+The approved 2D characters remain the visual reference and production fallback while optional 3D experimentation is deferred.
+
+## Production handoff priorities
+
+The broad visual ideation phase is sufficiently defined for implementation planning.
+
+Next bounded work should focus on:
+
+1. preserve current Open Design learner-facing wording
+2. replace prototype inline SVG icons with the documented Material Symbols Rounded layer
+3. reconcile reward artwork to stable achievement IDs
+4. implement syllable-aware Spelling Studio behavior and letters-only validation
+5. separate generated single-file UI into maintainable production components
+6. connect reviewed canonical content
+7. migrate structured learner state to IndexedDB
+8. preserve active-session recovery
+9. preserve Export Progress / Import Progress / Reset Progress safety rules
+10. connect Parent Progress to structured local analytics
+11. connect sound and celebration events through semantic services
+12. retain 2D study buddies as the baseline and defer 3D to the next phase
+
+## Audit conclusion
+
+The current Open Design export is no longer merely an early mockup. It is a substantial interaction prototype and should be treated as the preferred UI/UX handoff.
+
+Production work should preserve its wording, visual hierarchy, accessibility intent, and learner flow while replacing prototype-only implementation details with maintainable architecture.
